@@ -1,5 +1,5 @@
 class Department {
-    private _departmentId : number
+    private _departmentId : number;
     private _name : string;
 
     
