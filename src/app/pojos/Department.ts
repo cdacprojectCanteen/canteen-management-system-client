@@ -1,5 +1,5 @@
 class Department {
-    private _departmentId : number
+    private _departmentId : number;
     private _name : string;
 
     
@@ -19,7 +19,7 @@ class Department {
     
     
     public get name() : string {
-        return this._name;s
+        return this._name;
     }
     
     
