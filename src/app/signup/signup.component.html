@@ -1,0 +1,94 @@
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signupModal">
+  Sign UP
+</button>
+
+<div class="modal" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Sign UP</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form novalidate [formGroup] = "myform">
+          <div class="form-group row">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="firstName" class="form-control" id="firstName"
+                 placeholder="First Name" formControlName="firstName" required
+                 [ngClass]="{'is-invalid': myform.controls.firstName.invalid && myform.controls.firstName.dirty,
+                 'is-valid': myform.controls.firstName.valid && myform.controls.firstName.dirty}">
+                 <div class="invalid-feedback" 
+                 *ngIf="myform.controls.firstName.invalid && myform.controls.firstName.dirty" > 
+              * Minimum Three Characters
+            </div>
+              </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Last Name"
+            formControlName="lastName">
+          </div>
+          </div>
+          <div class="form-group"
+          >
+            <label for="emailSU">Email</label>
+            <input type="text" class="form-control" id="emailSU" placeholder="Email input"
+            formControlName="email" [ngClass]="{'is-invalid': myform.controls.email.invalid && myform.controls.email.dirty,
+            'is-valid': myform.controls.email.valid && myform.controls.email.dirty}">
+            <div class="invalid-feedback" 
+            *ngIf="myform.controls.email.invalid && myform.controls.email.dirty" > 
+         Email is invalid
+       </div>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="passwordSU" placeholder="Password input"
+            formControlName="password" required
+            [ngClass]="{'is-invalid': myform.controls.password.invalid && myform.controls.password.dirty,
+            'is-valid': myform.controls.password.valid && myform.controls.password.dirty}">
+            <div class="invalid-feedback" 
+            *ngIf="myform.controls.password.invalid && myform.controls.password.dirty" > 
+         Password is invalid
+       </div>
+          </div>
+          <div class="form-group">
+              <label for="phoneNo">Phone No.</label>
+              <input type="text" class="form-control" id="phoneNo" placeholder="Phone No."
+              formControlName="phoneNo" required [ngClass]="{'is-invalid': myform.controls.phoneNo.invalid && myform.controls.phoneNo.dirty,
+              'is-valid': myform.controls.phoneNo.valid && myform.controls.phoneNo.dirty}">
+              <div class="invalid-feedback" 
+              *ngIf="myform.controls.phoneNo.invalid && myform.controls.phoneNo.dirty" > 
+           * Valid PhoneNo is Required
+         </div>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea class="form-control" id="address" placeholder="Address"
+                formControlName="address"></textarea>
+              </div>
+              <div class="form-group">
+                  <label for="dateOfBirh">Date of Birth</label>
+                  <input type="date" class="form-control" id="dateOfBirth"
+                  formControlName="dateOfBirth" required [ngClass]="{'is-invalid': myform.controls.dateOfBirth.invalid && myform.controls.dateOfBirth.dirty,
+                  'is-valid': myform.controls.dateOfBirth.valid && myform.controls.dateOfBirth.dirty}">
+                  <div class="invalid-feedback" 
+                  *ngIf="myform.controls.dateOfBirth.invalid && myform.controls.dateOfBirth.dirty" > 
+               * Date of Birth is Required
+             </div>
+                </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Sign UP</button>
+          </div>
+          
+          <pre>{{myform.value | json}}</pre>
+        </form>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+

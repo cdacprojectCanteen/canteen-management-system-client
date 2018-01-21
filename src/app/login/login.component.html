@@ -12,14 +12,28 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form [formGroup]= "loginform" >
           <div class="form-group">
-            <label for="email">Email / Phone No.</label>
-            <input type="text" class="form-control" id="email" placeholder="Email input">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email" placeholder="Email input"
+            formControlName="email" required
+            [ngClass]="{'is-invalid': loginform.controls.email.invalid && loginform.controls.email.dirty,
+            'is-valid': loginform.controls.email.valid && loginform.controls.email.dirty}">
+            <div class="invalid-feedback" 
+            *ngIf="loginform.controls.email.invalid && loginform.controls.email.dirty" > 
+         * Invalid Email
+       </div>
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="text" class="form-control" id="password" placeholder="Password input">
+            <input type="text" class="form-control" id="password" placeholder="Password input" required
+            formControlName="password" required
+            [ngClass]="{'is-invalid': loginform.controls.password.invalid && loginform.controls.password.dirty,
+            'is-valid': loginform.controls.password.valid && loginform.controls.password.dirty}">
+            <div class="invalid-feedback" 
+            *ngIf="loginform.controls.password.invalid && loginform.controls.password.dirty" > 
+         * Invalid Password
+       </div>
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary">Sign in</button>
