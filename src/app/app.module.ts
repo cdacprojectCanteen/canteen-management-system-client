@@ -4,12 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, FormGroup, FormControl, ReactiveFormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { ProductBoxComponent } from './product-box/product-box.component';
-import { MenuComponent } from './menu/menu.component';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
-import { ContactusComponent } from './contactus/contactus.component';
-import { AboutusComponent } from './aboutus/aboutus.component';
+import { ProductBoxComponent } from './components/product-box/product-box.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { ContactusComponent } from './components/contactus/contactus.component';
+import { AboutusComponent } from './components/aboutus/aboutus.component';
 
 
 const routes: Routes = [
