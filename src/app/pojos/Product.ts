@@ -1,91 +1,88 @@
-class Product {
+import {Category} from './Category';
+export class Product {
 
-    private _productId :number;
-    private _name : string;
-    private _category :Category;
-    private _price : number;
-    private _quantity : number;
-    private _tags : Array<string>;
-    private _description : string;
+	public productId :number;
+    public name : string;
+    public category :Category;
+    public price : number;
+    public oldPrice : number;
+    public quantity : number;
+    public tags : Array<string>;
+    public description : string;
+
+    // private productId :number;
+    // private name : string;
+    // private category :Category;
+    // private price : number;
+    // private oldPrice : number;
+    // private quantity : number;
+    // private tags : Array<string>;
+    // private description : string;
 
 
-    
-    public set productId(v : number) {
-        this._productId = v;
-    }
-    
-    
-    public get productId() : number {
-        return this._productId;
-    }
-    
-    
-    public set name(v : string) {
-        this._name = v;
-    }
-    
-    
-    public get name() : string {
-        return this._name;
-    }
 
-    
-    public set category(v : Category) {
-        this._category = v;
-    }
+	// public get ProductId(): number {
+	// 	return this.productId;
+	// }
 
-    
-    public get category() : Category {
-        return this._category;
-    }
-    
-    
-    public set price(v : number) {
-        this._price = v;
-    }
-    
-    
-    public get price() : number {
-        return this._price;
-    }
-    
+	// public set ProductId(value: number) {
+	// 	this.productId = value;
+	// }
 
-    
-    public set quantity(v : number) {
-        this._quantity = v;
-    }
-    
+	// public get Name(): string {
+	// 	return this.name;
+	// }
 
-    
-    public get quantity() : number {
-        return this._quantity;
-    }
-    
-    
-    
-    public set tags(v : Array<string>) {
-        this._tags = v;
-    }
-    
+	// public set Name(value: string) {
+	// 	this.name = value;
+	// }
 
-    
-    public get tags() : Array<string> {
-        return this._tags;
-    }
-    
-    
-    
-    public set description(v : string) {
-        this._description = v;
-    }
-    
+	// public get Category(): Category {
+	// 	return this.category;
+	// }
 
+	// public set Category(value: Category) {
+	// 	this.category = value;
+	// }
+
+	// public get Price(): number {
+	// 	return this.price;
+	// }
+
+	// public set Price(value: number) {
+	// 	this.price = value;
+	// }
+
+	// public get OldPrice(): number {
+	// 	return this.oldPrice;
+	// }
+
+	// public set OldPrice(value: number) {
+	// 	this.oldPrice = value;
+	// }
+
+	// public get Quantity(): number {
+	// 	return this.quantity;
+	// }
+
+	// public set Quantity(value: number) {
+	// 	this.quantity = value;
+	// }
+
+	// public get Tags(): Array<string> {
+	// 	return this.tags;
+	// }
+
+	// public set Tags(value: Array<string>) {
+	// 	this.tags = value;
+	// }
+
+	// public get Description(): string {
+	// 	return this.description;
+	// }
+
+	// public set Description(value: string) {
+	// 	this.description = value;
+	// }
     
-    public get description() : string {
-        return this._description;
-    }
-    
-    constructor(parameters) {
-        
-    }
 }

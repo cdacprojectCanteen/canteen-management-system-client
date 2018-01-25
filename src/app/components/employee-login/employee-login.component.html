@@ -1,0 +1,45 @@
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#employeeLoginModal">
+  Launch demo modal
+</button> -->
+
+<div class="modal" id="employeeLoginModal" tabindex="-1" role="dialog" aria-labelledby="employeeLoginModalLabel" aria-hidden="true"><!-- *ngIf="shouldDisplay">-->
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="employeeLoginModalLabel">Employee Login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="loginform" (ngSubmit)="employeeLogin()" enctype="multipart/form-data">
+          <div class="alert alert-danger" role="alert" *ngIf="invalidLogin">
+            Invalid Username/Password
+          </div>
+          <div class="form-group">
+            <label for="employeeUsername">Email</label>
+            <input type="text" class="form-control" id="employeeUsername" placeholder="Email/Phone no" formControlName="username" required [ngClass]="{'is-invalid': loginform.controls.username.invalid && loginform.controls.username.dirty,
+              'is-valid': loginform.controls.username.valid && loginform.controls.username.dirty}">
+            <div class="invalid-feedback" *ngIf="loginform.controls.username.invalid && loginform.controls.username.dirty">
+              * Invalid E-mail/Phone no
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="employeePassword">Password</label>
+            <input type="text" class="form-control" id="employeePassword" placeholder="Password input" required formControlName="password" required
+              [ngClass]="{'is-invalid': loginform.controls.password.invalid && loginform.controls.password.dirty,
+              'is-valid': loginform.controls.password.valid && loginform.controls.password.dirty}">
+            <div class="invalid-feedback" *ngIf="loginform.controls.password.invalid && loginform.controls.password.dirty">
+              * Invalid Password
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Sign in</button>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,5 +1,3 @@
 class Feedback {
-    constructor(parameters) {
-        
-    }
+    
 }

@@ -1,7 +1,4 @@
-class Customer extends Person{
+import {Person} from './Person';
+export class Customer extends Person{
 
-
-    constructor(parameters) {
-        super(parameters);
-    }
 }

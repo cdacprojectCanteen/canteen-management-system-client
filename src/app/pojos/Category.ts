@@ -1,30 +1,27 @@
-class Category {
+export class Category {
 
-    private _categoryId : string;
-    private _name : string;
+	public categoryId : number;
+    public name : string;
 
-    
-    public set categoryId(v : string) {
-        this._categoryId = v;
-    }
+    // private categoryId : number;
+    // private name : string;
 
-    
-    public get categoryId() : string {
-        return this._categoryId;
-    }
-    
-    
-    public set name(v : string) {
-        this._name = v;
-    }
-    
-    
-    public get name() : string {
-        return this._name;
-    }
-    
 
-    constructor(parameters) {
-        
-    }
+	// public get CategoryId(): number {
+	// 	return this.categoryId;
+	// }
+
+	// public set CategoryId(value: number) {
+	// 	this.categoryId = value;
+	// }
+
+	// public get Name(): string {
+	// 	return this.name;
+	// }
+
+	// public set Name(value: string) {
+	// 	this.name = value;
+	// }
+    
+    
 }

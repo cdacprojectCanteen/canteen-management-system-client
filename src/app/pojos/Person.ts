@@ -1,99 +1,117 @@
-    abstract class Person{
+    export abstract class Person{
 
-    private _id : number;
-    private _firstName : string;
-    private _lastName : string;
-    private _passHash : string;
-    private _address : Address;
-    private _phoneNo : PhoneNO;
-    private _emailId : Email;
-    private _dateOfBirth : Date;
-    private _dateOfJoining : Date;
-    private _preferredLanguage : string;
+		public id : number;
+		public firstName : string;
+		public lastName : string;
+		public passHash : string;
+		public gender : string;
+		public phoneNo : string;
+		public emailId : string;
+		public dateOfBirth : Date;
+		public dateOfJoining : Date;
+		public profilePic : string;
+		public preferredLanguage : string;
+
+    // private id : number;
+    // private firstName : string;
+    // private lastName : string;
+    // private passHash : string;
+    // private gender : string;
+    // private phoneNo : string;
+    // private emailId : string;
+    // private dateOfBirth : Date;
+	// private dateOfJoining : Date;
+	// private profilePic : string;
+    // private preferredLanguage : string;
     
-    
 
-	public get id(): number {
-		return this._id;
-	}
+	// public get Id(): number {
+	// 	return this.id;
+	// }
 
-	public set id(value: number) {
-		this._id = value;
-	}
+	// public set Id(value: number) {
+	// 	this.id = value;
+	// }
+	
 
-	public get firstName(): string {
-		return this._firstName;
-	}
+	// public get FirstName(): string {
+	// 	return this.firstName;
+	// }
 
-	public set firstName(value: string) {
-		this._firstName = value;
-	}
+	// public set FirstName(value: string) {
+	// 	this.firstName = value;
+	// }
 
-	public get lastName(): string {
-		return this._lastName;
-	}
+	// public get LastName(): string {
+	// 	return this.lastName;
+	// }
 
-	public set lastName(value: string) {
-		this._lastName = value;
-	}
+	// public set LastName(value: string) {
+	// 	this.lastName = value;
+	// }
 
-	public get passHash(): string {
-		return this._passHash;
-	}
+	// public get PassHash(): string {
+	// 	return this.passHash;
+	// }
 
-	public set passHash(value: string) {
-		this._passHash = value;
-	}
+	// public set PassHash(value: string) {
+	// 	this.passHash = value;
+	// }
 
-	public get address(): Address {
-		return this._address;
-	}
+	// public get Gender(): string {
+	// 	return this.gender;
+	// }
 
-	public set address(value: Address) {
-		this._address = value;
-	}
+	// public set Gender(value: string) {
+	// 	this.gender = value;
+	// }
 
-	public get phoneNo(): PhoneNO {
-		return this._phoneNo;
-	}
+	// public get PhoneNo(): string {
+	// 	return this.phoneNo;
+	// }
 
-	public set phoneNo(value: PhoneNO) {
-		this._phoneNo = value;
-	}
+	// public set PhoneNo(value: string) {
+	// 	this.phoneNo = value;
+	// }
 
-	public get emailId(): Email {
-		return this._emailId;
-	}
+	// public get EmailId(): string {
+	// 	return this.emailId;
+	// }
 
-	public set emailId(value: Email) {
-		this._emailId = value;
-	}
+	// public set EmailId(value: string) {
+	// 	this.emailId = value;
+	// }
 
-	public get dateOfBirth(): Date {
-		return this._dateOfBirth;
-	}
+	// public get DateOfBirth(): Date {
+	// 	return this.dateOfBirth;
+	// }
 
-	public set dateOfBirth(value: Date) {
-		this._dateOfBirth = value;
-	}
+	// public set DateOfBirth(value: Date) {
+	// 	this.dateOfBirth = value;
+	// }
 
-	public get dateOfJoining(): Date {
-		return this._dateOfJoining;
-	}
+	// public get DateOfJoining(): Date {
+	// 	return this.dateOfJoining;
+	// }
 
-	public set dateOfJoining(value: Date) {
-		this._dateOfJoining = value;
-	}
+	// public set DateOfJoining(value: Date) {
+	// 	this.dateOfJoining = value;
+	// }
 
-	public get preferredLanguage(): string {
-		return this._preferredLanguage;
-	}
+	// public get ProfilePic(): string {
+	// 	return this.profilePic;
+	// }
 
-	public set preferredLanguage(value: string) {
-		this._preferredLanguage = value;
-	}
+	// public set ProfilePic(value: string) {
+	// 	this.profilePic = value;
+	// }
 
-    constructor(parameters) {
-        
-    }
+	// public get PreferredLanguage(): string {
+	// 	return this.preferredLanguage;
+	// }
+
+	// public set PreferredLanguage(value: string) {
+	// 	this.preferredLanguage = value;
+	// }
+	
 }

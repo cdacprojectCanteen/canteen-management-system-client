@@ -1,29 +1,27 @@
-class Employee extends Person {
-    private _salary : number;
-    private _department : Department;
+import {Person} from './Person';
+export class Employee extends Person {
+	public salary : number;
+	public department : Department;
+	
+    // private salary : number;
+    // private department : Department;
 
     
-    public set salary(v : number) {
-        this._salary = v;
-    }
-    
-    
-    public get salary() : number {
-        return this._salary;
-    }
-    
-    
-    public set department(v : Department) {
-        this._department = v;
-    }
-    
-    
-    public get department() : Department {
-        return this._department;
-    }
-    
 
-    constructor(parameters) {
-        super(parameters);
-    }
+	// public get Salary(): number {
+	// 	return this.salary;
+	// }
+
+	// public set Salary(value: number) {
+	// 	this.salary = value;
+	// }
+
+	// public get Department(): Department {
+	// 	return this.department;
+	// }
+
+	// public set Department(value: Department) {
+	// 	this.department = value;
+	// }
+    
 }

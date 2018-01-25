@@ -7,14 +7,13 @@
 	<img class="card-img-top" src="../../assets/images/Samosachutney.jpg"
 		alt="Card image cap">
 	<div class="card-block">
-		<h4 class="card-title">Samosa</h4>
+		<h4 class="card-title">{{product.name}}</h4>
 		<h6>
-			<strong>₹10</strong> <span class=""
-				style="text-decoration: line-through;">₹12</span> <span
-				style="color: green;">17% off</span>
+			<strong>₹{{product.price}}</strong> <span class="" *ngIf="(product.price/product.oldPrice)<1"
+				style="text-decoration: line-through;">₹{{product.oldPrice}}</span> <span *ngIf="(product.price/product.oldPrice)<1"
+				style="color: green;">{{product.price/product.oldPrice | percent}} off</span>
 		</h6>
-		<p class="card-text">Some quick example text to build on the card
-			title and make up the bulk of the card's content.</p>
+		<p class="card-text">{{product.description}}</p>
 		<a href="#" class="btn btn-outline-primary">Add to cart</a>
 	</div>
 </div>

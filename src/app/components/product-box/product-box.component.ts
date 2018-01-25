@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Input } from '@angular/core/';
+import { Product } from '../../pojos/Product';
 
 @Component({
   selector: 'app-product-box',
@@ -6,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-box.component.css']
 })
 export class ProductBoxComponent implements OnInit {
+
+  @Input() product : Product;
 
   constructor() { }
 
