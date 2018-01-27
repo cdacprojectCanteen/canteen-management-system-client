@@ -1,3 +1,111 @@
-<p>
-  employee-add-employee-form works!
-</p>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeModal">
+	Sign UP
+</button>
+
+<div class="modal" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addEmployeeModalLabel">Add Employee</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form novalidate [formGroup]="_addEmployeeForm" id="msform" enctype="multipart/form-data" (ngSubmit)="onSubmit()">
+
+					<!-- progressbar -->
+					<ul id="progressbar">
+						<li class="active">Personal Details</li>
+						<li>Account Setup</li>
+						<li>More Info</li>
+						<li>Profile Picture</li>
+					</ul>
+					<!-- fieldsets -->
+					<fieldset>
+						<h2 class="fs-title">Personal Details</h2>
+						<h3 class="fs-subtitle">Tell us about yourself</h3>
+						<div class="form-group">
+							<input type="firstName" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName" required
+							 [ngClass]="{'is-invalid': _addEmployeeForm.controls.firstName.invalid && _addEmployeeForm.controls.firstName.dirty,
+'is-valid': _addEmployeeForm.controls.firstName.valid && _addEmployeeForm.controls.firstName.dirty}">
+							<div class="invalid-feedback" *ngIf="_addEmployeeForm.controls.firstName.invalid && _addEmployeeForm.controls.firstName.dirty">
+								* Minimum Three Characters
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName">
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" id="phoneNo" placeholder="Phone No." formControlName="phoneNo" required [ngClass]="{'is-invalid': _addEmployeeForm.controls.phoneNo.invalid && _addEmployeeForm.controls.phoneNo.dirty,
+'is-valid': _addEmployeeForm.controls.phoneNo.valid && _addEmployeeForm.controls.phoneNo.dirty}">
+							<div class="invalid-feedback" *ngIf="_addEmployeeForm.controls.phoneNo.invalid && _addEmployeeForm.controls.phoneNo.dirty">
+								* Valid PhoneNo is Required
+								<p *ngIf="_addEmployeeForm.controls.phoneNo.errors.phoneNoNotUnique">
+									Account already exists with this Phone Number
+								</p>
+							</div>
+						</div>
+						<input type="button" name="next" class="next action-button" value="Next" />
+					</fieldset>
+					<fieldset>
+						<h2 class="fs-title">Account</h2>
+						<h3 class="fs-subtitle">Your account information</h3>
+						<div class="form-group">
+							<input type="email" class="form-control" id="email" placeholder="E-mail" formControlName="email" [ngClass]="{'is-invalid': _addEmployeeForm.controls.email.invalid && _addEmployeeForm.controls.email.dirty,
+'is-valid': _addEmployeeForm.controls.email.valid && _addEmployeeForm.controls.email.dirty}">
+							<div class="invalid-feedback" *ngIf="_addEmployeeForm.controls.email.invalid && _addEmployeeForm.controls.email.dirty">
+								Email is invalid
+								<p *ngIf="_addEmployeeForm.controls.email.errors.emailNotUnique">
+									Account already exists with this E-mail
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" id="password" placeholder="Password" formControlName="password" required [ngClass]="{'is-invalid': _addEmployeeForm.controls.password.invalid && _addEmployeeForm.controls.password.dirty,
+'is-valid': _addEmployeeForm.controls.password.valid && _addEmployeeForm.controls.password.dirty}">
+							<div class="invalid-feedback" *ngIf="_addEmployeeForm.controls.password.invalid && _addEmployeeForm.controls.password.dirty">
+								Password is invalid
+							</div>
+						</div>
+						<!-- <div class="form-group">
+		<input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" formControlName="confirmPassword" required
+		 [ngClass]="{'is-invalid': _addEmployeeForm.controls.confirmPassword.invalid && _addEmployeeForm.controls.confirmPassword.dirty,
+'is-valid': _addEmployeeForm.controls.confirmPassword.valid && _addEmployeeForm.controls.confirmPassword.dirty}">
+		<div class="invalid-feedback" *ngIf="_addEmployeeForm.controls.confirmPassword.invalid && _addEmployeeForm.controls.confirmPassword.dirty">
+			Passwords do not match
+		</div>
+	</div> -->
+						<input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+						<input type="button" name="next" class="next action-button" value="Next" />
+					</fieldset>
+					<fieldset>
+						<h2 class="fs-title">More Details</h2>
+						<h3 class="fs-subtitle">Tell us something more about you</h3>
+						<div class="form-group">
+							<input type="date" class="form-control" id="dateOfBirth" formControlName="dateOfBirth" required [ngClass]="{'is-invalid': _addEmployeeForm.controls.dateOfBirth.invalid && _addEmployeeForm.controls.dateOfBirth.dirty,
+  'is-valid': _addEmployeeForm.controls.dateOfBirth.valid && _addEmployeeForm.controls.dateOfBirth.dirty}">
+							<div class="invalid-feedback" *ngIf="_addEmployeeForm.controls.dateOfBirth.invalid && _addEmployeeForm.controls.dateOfBirth.dirty">
+								* Date of Birth is Required
+							</div>
+						</div>
+						<div class="form-group">
+							<select name="gender" class="form-control custom-select mr-sm-2" id="gender" formControlName="gender">
+								<option selected value="Male">Male</option>
+								<option value="Female">Female</option>
+							</select>
+						</div>
+						<input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+						<input type="submit" name="submit" class="submit action-button" value="Submit" />
+					</fieldset>
+
+
+
+					<pre>{{_addEmployeeForm.value | json}}</pre>
+				</form>
+
+			</div>
+
+		</div>
+	</div>
+</div>

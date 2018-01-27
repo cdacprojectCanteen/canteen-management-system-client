@@ -6,11 +6,9 @@
 		public passHash : string;
 		public gender : string;
 		public phoneNo : string;
-		public emailId : string;
+		public email : string;
 		public dateOfBirth : Date;
 		public dateOfJoining : Date;
-		public profilePic : string;
-		public preferredLanguage : string;
 
     // private id : number;
     // private firstName : string;

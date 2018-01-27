@@ -9,6 +9,7 @@ import { Customer } from '../../pojos/Customer';
 import { CustomerService } from '../../services/customer.service';
 import { EmailValidator } from '../../validators/EmailValidator';
 import { PhoneNoValidator } from '../../validators/PhoneNoValidator';
+import { AccountService } from '../../services/account.service';
 declare var $: any;
 
 
@@ -19,12 +20,13 @@ declare var $: any;
 })
 export class SignupFormComponent implements OnInit {
 
-  errorMessage: string;
+  private errorMessage: string;
+  private isEmployee: boolean = false;
 
-  _profilePicUrl: string;
+  private _profilePicUrl: string;
   private _signupForm: FormGroup;
-  _password: string;
-  _confirmPassword: string;
+  private _password: string;
+  private _confirmPassword: string;
 
   constructor(private customerService: CustomerService) { 
     this._profilePicUrl = "../../../assets/images/user_male.png";
@@ -35,14 +37,12 @@ export class SignupFormComponent implements OnInit {
     let customer = new Customer();
     customer.firstName = this._signupForm.controls.firstName.value;
     customer.lastName = this._signupForm.controls.lastName.value;
-    customer.emailId = this._signupForm.controls.email.value;
+    customer.email = this._signupForm.controls.email.value;
     customer.passHash = this._signupForm.controls.password.value;
     customer.phoneNo = this._signupForm.controls.phoneNo.value;
     customer.gender = this._signupForm.controls.gender.value;
     customer.dateOfBirth = this._signupForm.controls.dateOfBirth.value;
     customer.dateOfJoining = new Date();
-    customer.profilePic = this._signupForm.controls.userProfilePic.value;
-    customer.preferredLanguage = 'English';
     console.log(customer);
     this.addCustomer(customer);
   }
@@ -58,8 +58,8 @@ export class SignupFormComponent implements OnInit {
 
   
   ngOnInit() {
-    let emailValidator = new EmailValidator(this.customerService);
-    let phoneNoValidator = new PhoneNoValidator(this.customerService);
+    // let emailValidator = new EmailValidator(this.customerService,null);
+    // let phoneNoValidator = new PhoneNoValidator(this.customerService,null);
     
     this._signupForm = new FormGroup({
       firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -67,10 +67,9 @@ export class SignupFormComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email],[EmailValidator.uniqueEmailValidator]),
       password: new FormControl('', [Validators.required, Validators.minLength(3)]),
       confirmPassword: new FormControl('',Validators.pattern(this._password)),
-      phoneNo: new FormControl('', [Validators.required, Validators.minLength(5)],[PhoneNoValidator.uniquePhoneValidator]),
+      phoneNo: new FormControl('', [Validators.required, Validators.minLength(5)],[PhoneNoValidator.uniquePhoneNoValidator]),
       gender: new FormControl('Male'),
-      dateOfBirth: new FormControl('', Validators.required),
-      userProfilePic : new FormControl()
+      dateOfBirth: new FormControl('', Validators.required)
     });
 
 //jQuery time

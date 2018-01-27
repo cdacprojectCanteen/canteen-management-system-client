@@ -8,7 +8,8 @@ export class Product {
     public oldPrice : number;
     public quantity : number;
     public tags : Array<string>;
-    public description : string;
+	public description : string;
+	public productImageUrl : string;
 
     // private productId :number;
     // private name : string;

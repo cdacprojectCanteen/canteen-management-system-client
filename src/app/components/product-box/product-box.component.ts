@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Input } from '@angular/core/';
 import { Product } from '../../pojos/Product';
+import { config } from '../../config';
 
 @Component({
   selector: 'app-product-box',
@@ -10,6 +11,7 @@ import { Product } from '../../pojos/Product';
 export class ProductBoxComponent implements OnInit {
 
   @Input() product : Product;
+  imageUrl = config.imageUrl;
 
   constructor() { }
 

@@ -20,12 +20,25 @@ export class ProductService {
 		        .map(this.extractData)
 		        .catch(this.handleErrorObservable);
     }
-    addProduct(product:Product): Observable<Product> {
+    addProduct(product:Product, fileToUpload:any): Observable<Product> {
         let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
+        // headers.append('Content-Type', 'application/json');
+        // headers.append('Content-Type','multipart/form-data');
         headers.append('Access-Control-Allow-Origin', '*');
+
+        let formData:FormData = new FormData();
+        // formData.append('productPicUrl', files[0], files[0].name);
+        if(fileToUpload == null)
+            formData.append('file', new Blob(), '');
+        else
+            formData.append('file', fileToUpload, fileToUpload.name);
+
+        formData.append('json', new Blob([JSON.stringify(product)], {
+            type: "application/json"
+        }));
+
         let options = new RequestOptions({ headers: headers });
-        return this.http.post(url, product, options)
+        return this.http.post(url, formData, options)
                    .map(this.extractData)
                    .catch(this.handleErrorObservable);
 	}

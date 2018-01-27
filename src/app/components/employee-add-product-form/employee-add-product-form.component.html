@@ -1,3 +1,91 @@
-<p>
-  employee-add-product-form works!
-</p>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">
+	Sign UP
+</button>
+
+<div class="modal" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addProductModalLabel">Add Product</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form novalidate [formGroup]="_addProductForm" id="msform" enctype="multipart/form-data" (ngSubmit)="onSubmit()">
+
+					<!-- progressbar -->
+					<ul id="progressbar">
+						<li class="active">Personal Details</li>
+						<li>Account Setup</li>
+						<li>More Info</li>
+						<li>Profile Picture</li>
+					</ul>
+					<!-- fieldsets -->
+					<fieldset>
+						<h2 class="fs-title">Personal Details</h2>
+						<h3 class="fs-subtitle">Tell us about yourself</h3>
+						<div class="form-group">
+							<input type="name" class="form-control" id="name" placeholder="Product Name" formControlName="name" required [ngClass]="{'is-invalid': _addProductForm.controls.name.invalid && _addProductForm.controls.name.dirty,
+'is-valid': _addProductForm.controls.name.valid && _addProductForm.controls.name.dirty}">
+							<div class="invalid-feedback" *ngIf="_addProductForm.controls.name.invalid && _addProductForm.controls.name.dirty">
+								* Minimum Three Characters
+							</div>
+						</div>
+						<div class="form-group">
+							<select name="category" class="form-control custom-select mr-sm-2" id="category" formControlName="category">
+								<option selected>Please select a category</option>
+								<option *ngFor="let category of _categories" [value]="category.categoryId">{{category.name}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<input type="number" class="form-control" id="price" placeholder="Price in ₹" formControlName="price" required [ngClass]="{'is-invalid': _addProductForm.controls.price.invalid && _addProductForm.controls.price.dirty,
+'is-valid': _addProductForm.controls.price.valid && _addProductForm.controls.price.dirty}" step="1.00" min="0.00">
+							<div class="invalid-feedback" *ngIf="_addProductForm.controls.price.invalid && _addProductForm.controls.price.dirty">
+								Price cannot be less than ₹0
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="number" class="form-control" id="quantity" placeholder="Quantity" formControlName="quantity" required [ngClass]="{'is-invalid': _addProductForm.controls.quantity.invalid && _addProductForm.controls.quantity.dirty,
+'is-valid': _addProductForm.controls.quantity.valid && _addProductForm.controls.quantity.dirty}" step="1.00" min="0.00">
+							<div class="invalid-feedback" *ngIf="_addProductForm.controls.quantity.invalid && _addProductForm.controls.quantity.dirty">
+								Quantity cannot be less than 0
+							</div>
+						</div>
+						<input type="button" name="next" class="next action-button" value="Next" />
+					</fieldset>
+					<fieldset>
+						<h2 class="fs-title">Account</h2>
+						<h3 class="fs-subtitle">Your account information</h3>
+						<div class="form-group">
+							<input type="text" class="form-control" id="tags" placeholder="Tags Seperated by comma(,)" formControlName="tags" aria-describedby="tagsHelpBlock">
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" id="description" placeholder="Description" formControlName="description">
+						</div>
+						<input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+						<input type="button" name="next" class="next action-button" value="Next" />
+					</fieldset>
+					<fieldset>
+						<h2 class="fs-title">Product Image</h2>
+						<h3 class="fs-subtitle">Choose an Image for the product</h3>
+						<img [src]="_productPicUrl" style="width: 50%;" alt="Not found">
+						<input id="imgInput" hidden #fileInput (change)="readUrl($event)" type="file" name="productImageUrl" accept="image/*" formControlName="productImageUrl">
+						<div class="form-group" style="margin-top: 25px;">
+							<button type="button" class="btn btn-primary" id="imgBrowse">Browse</button>
+						</div>
+						<input type="button" style="display:none;position: absolute; top: 20%; right: 10%; height: 15px; width: 15px;" value="Button">
+						<input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+						<input type="submit" name="submit" class="submit action-button" value="Submit" />
+					</fieldset>
+
+
+
+					<pre>{{_addProductForm.value | json}}</pre>
+				</form>
+
+			</div>
+
+		</div>
+	</div>
+</div>
