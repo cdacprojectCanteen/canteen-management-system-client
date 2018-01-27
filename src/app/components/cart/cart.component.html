@@ -1,0 +1,72 @@
+<div style="margin: auto; max-width: 600px;">
+<data-table
+[items]="product"
+[itemCount]="carCount"
+(reload)="reloadCars($event)"
+
+[pagination]="false"
+[indexColumn]="false"
+[selectColumn]="true"
+[multiSelect]="true"
+[rowColors]="rowColors"
+>
+
+<data-table-column
+property="name"
+header="Name">
+</data-table-column>
+
+<data-table-column
+property="quantity"
+header="Quantity"
+sortable="true">
+<ng-template #dataTableCell let-item="item">
+  <input type="number" [(ngModel)]="item.quantity" class="form-control input-sm" style="width: 75px"/>
+</ng-template>
+</data-table-column>
+<data-table-column
+property="price"
+header="Price">
+</data-table-column>
+<data-table-column
+header="Cancel">
+<ng-template #dataTableCell let-item="item">
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  ×
+</button>
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      
+        <button type="button" (click)="deleteProduct(item)" data-dismiss="modal" class="btn btn-primary">Delete Order</button>
+  
+      </div>
+    </div>
+  </div>
+</div>
+</ng-template>
+
+</data-table-column>
+</data-table>
+<div>
+  Total Price: {{totalPrice}}{{ano}}
+</div>
+<div>
+  <button>Check Out</button>
+</div>
+<div><button (click)="addProduct($event)">Add Product</button></div>
+</div>
