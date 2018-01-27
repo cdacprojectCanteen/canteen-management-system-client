@@ -20,7 +20,7 @@ export class ProductService {
 		        .map(this.extractData)
 		        .catch(this.handleErrorObservable);
     }
-    addProduct(product:Product, fileToUpload:any): Observable<Product> {
+    addProduct(product:Product, fileToUpload:any): Observable<number> {
         let headers = new Headers();
         // headers.append('Content-Type', 'application/json');
         // headers.append('Content-Type','multipart/form-data');
@@ -41,7 +41,36 @@ export class ProductService {
         return this.http.post(url, formData, options)
                    .map(this.extractData)
                    .catch(this.handleErrorObservable);
-	}
+    }
+
+    updateProduct(product:Product, fileToUpload:any): Observable<Product> {
+        let headers = new Headers();
+        // headers.append('Content-Type', 'application/json');
+        // headers.append('Content-Type','multipart/form-data');
+        headers.append('Access-Control-Allow-Origin', '*');
+
+        let formData:FormData = new FormData();
+        // formData.append('productPicUrl', files[0], files[0].name);
+        if(fileToUpload == null)
+            formData.append('file', new Blob(), '');
+        else
+            formData.append('file', fileToUpload, fileToUpload.name);
+
+        formData.append('json', new Blob([JSON.stringify(product)], {
+            type: "application/json"
+        }));
+
+        let options = new RequestOptions({ headers: headers });
+        return this.http.put(url, formData, options)
+                   .map(this.extractData)
+                   .catch(this.handleErrorObservable);
+    }
+    
+    public deleteProduct(productId:number): Observable<Product[]> {
+        return this.http.delete(url+productId)
+		        .map(this.extractData)
+		        .catch(this.handleErrorObservable);
+    }
     private extractData(res: Response) {
 	    let body = res.json();
         return body || {};
