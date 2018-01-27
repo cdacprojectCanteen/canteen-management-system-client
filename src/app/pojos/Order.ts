@@ -9,6 +9,7 @@ export class Order {
     public orderTime : Date;
     public transactionNo : number;
 	public couponCode : string;
+	public orderStatus : string;
 
     // private orderId : number;
     // private customer : Customer;

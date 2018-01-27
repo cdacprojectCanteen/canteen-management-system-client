@@ -35,7 +35,7 @@ constructor(private accountService: AccountService, private router: Router) { }
       console.log("Observed: "+valid);
       this.invalidLogin = !valid;
       if(valid){
-        this.router.navigateByUrl('/dashboard');
+        this.router.navigateByUrl('/employee');
         // this.shouldDisplay = false;
         $('#employeeLoginModal').modal('hide');
       }

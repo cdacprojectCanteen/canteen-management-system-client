@@ -33,11 +33,11 @@ export class MenuComponent implements OnInit {
       .subscribe(products => this.products = products,
       error => this.errorMessage = <any>error);
   }
-  addProduct(product: Product): void {
-    this.productService.addProduct(product)
-      .subscribe( product => {
-                this.fetchProducts(); 						   
-           },
-                    error => this.errorMessage = <any>error);
-  }
+  // addProduct(product: Product): void {
+  //   this.productService.addProduct(product)
+  //     .subscribe( product => {
+  //               this.fetchProducts(); 						   
+  //          },
+  //                   error => this.errorMessage = <any>error);
+  // }
 }

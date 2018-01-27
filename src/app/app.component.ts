@@ -10,9 +10,15 @@ import { AccountService } from './services/account.service';
 })
 export class AppComponent {
   title = 'Canteen Management System';
+  isEmployee: boolean = true;
 
   constructor(private accountService: AccountService){
     this.accountService.restoreLoginState();
+    this.accountService.IsLoggedIn().subscribe(loggedIn => {
+      this.accountService.IsEmployee().subscribe(isEmployee => {
+          this.isEmployee = isEmployee;
+      });
+    });
   } 
 
   // loggedIn : boolean = false;
