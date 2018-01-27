@@ -33,6 +33,8 @@ import { EmployeeViewOrderHistoryComponent } from './components/employee-view-or
 import { EmployeeHomeComponent } from './components/employee-home/employee-home.component';
 import { CustomerGuard } from './guards/customer.guard';
 import { CategoryService } from './services/category.service';
+import { DataTableModule } from './components/data-table';
+import { CommonModule } from '@angular/common';
 
 
 const routes: Routes = [
@@ -83,7 +85,9 @@ const routes: Routes = [
     HttpModule,
     RouterModule.forRoot( routes ),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule,
+    DataTableModule
   ],
   providers: [
     TestServiceService,
