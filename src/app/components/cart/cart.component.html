@@ -6,8 +6,8 @@
 
 [pagination]="false"
 [indexColumn]="false"
-[selectColumn]="true"
-[multiSelect]="true"
+[selectColumn]="false"
+[multiSelect]="false"
 [rowColors]="rowColors"
 >
 
@@ -21,12 +21,19 @@ property="quantity"
 header="Quantity"
 sortable="true">
 <ng-template #dataTableCell let-item="item">
-  <input type="number" [(ngModel)]="item.quantity" class="form-control input-sm" style="width: 75px"/>
+  <input type="number" [(ngModel)]="item.quantity" (change)="updateProduct(item)" class="form-control input-sm" style="width: 75px" min="1"/>
 </ng-template>
 </data-table-column>
 <data-table-column
 property="price"
 header="Price">
+</data-table-column>
+<data-table-column
+header="Amount">
+<ng-template #dataTableCell let-item="item">
+  <!-- <input type="number" [(ngModel)]="item.quantity" class="form-control input-sm" style="width: 75px"/> -->
+  <label>{{item.quantity*item.price}}</label>
+</ng-template>
 </data-table-column>
 <data-table-column
 header="Cancel">
@@ -66,7 +73,7 @@ header="Cancel">
   Total Price: {{totalPrice}}{{ano}}
 </div>
 <div>
-  <button>Check Out</button>
+  <button class="btn btn-primary">Check Out</button>
 </div>
-<div><button (click)="addProduct($event)">Add Product</button></div>
+<!-- <div><button (click)="addProduct($event)">Add Product</button></div> -->
 </div>

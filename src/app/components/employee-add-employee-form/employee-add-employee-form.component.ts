@@ -10,6 +10,8 @@ import { EmployeeService } from '../../services/employee.service';
 import { EmailValidator } from '../../validators/EmailValidator';
 import { PhoneNoValidator } from '../../validators/PhoneNoValidator';
 import { AccountService } from '../../services/account.service';
+import { UpdateProductChannelService } from '../../services/update-product-channel.service';
+import { Product } from '../../pojos/Product';
 declare var $: any;
 
 
@@ -29,7 +31,7 @@ export class EmployeeAddEmployeeFormComponent implements OnInit {
 
   constructor(private employeeService: EmployeeService, private accountService: AccountService) { 
     this._profilePicUrl = "../../../assets/images/user_male.png";
-
+    
   }
 
   onSubmit(){

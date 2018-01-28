@@ -1,7 +1,13 @@
+<div>
+    <button type="button" (click)="myf()" class="btn btn-primary"data-toggle="modal" data-target="#addProductModal">
+        Add Product
+      </button>
+    <app-employee-add-product-form (onProductAdded)="onProductAdded($event)" (onProductUpdated)="onProductUpdated($event)"></app-employee-add-product-form>
+</div>
 <div style="margin: auto;">
   <data-table
   [items]="product"
-  [itemCount]="carCount"
+  [itemCount]="productCount"
   (reload)="reloadProducts($event)"
   
   [pagination]="true"
@@ -12,7 +18,7 @@
   >
   
   <data-table-column
-  property="id"
+  property="productId"
   header="ID">
   </data-table-column>
   
@@ -22,13 +28,21 @@
   </data-table-column>
   
   <data-table-column
-  property="category"
   header="Category">
+  <ng-template #dataTableCell let-item="item">
+      <!-- <input type="text" [(ngModel)]="item.category.name" class="form-control input-sm" style="width: 75px"/> -->
+      {{item.category.name}}
+    </ng-template>
   </data-table-column>
 
   <data-table-column
   property="price"
   header="Price">
+  </data-table-column>
+
+  <data-table-column
+  property="quantity"
+  header="Quantity">
   </data-table-column>
 
 
@@ -42,6 +56,20 @@
   header="Description">
   </data-table-column>
 
+  
+  <data-table-column
+  header="Update">
+  <ng-template #dataTableCell let-item="item">
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#updateProductModal">
+    Update
+  </button> -->
+  <button type="button" (click)="myf2(item)" class="btn btn-info"data-toggle="modal" data-target="#addProductModal">
+      Update
+    </button>
+  <!-- <app-employee-add-product-form *ngIf="tval2" (onProductAdded)="onProductAdded($event)" [_updateProduct]="item"></app-employee-add-product-form> -->
+  </ng-template>
+  </data-table-column>
   <data-table-column
   header="Delete">
   <ng-template #dataTableCell let-item="item">
@@ -51,11 +79,11 @@
   </button>
   
   <!-- Modal -->
-  <div class="modal" id="productlistModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal" id="productlistModal" tabindex="-1" role="dialog" aria-labelledby="confirmDialogModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Are you sure to Delete?</h5>
+          <h5 class="modal-title" id="confirmDialogModalLabel">Are you sure to Delete?</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
@@ -74,20 +102,9 @@
   </ng-template>
   
   </data-table-column>
-  <data-table-column
-  header="Update">
-  <ng-template #dataTableCell let-item="item">
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#updateProductModal">
-    Update
-  </button>
-  </ng-template>
-  </data-table-column>
   </data-table>
   <div>
   </div>
-  <div>
-    <button>Add Product</button>
-  </div>
+  
   
   </div>

@@ -13,7 +13,13 @@ const url = "http://localhost:8080/canteenmgmtserver/Product/";
 @Injectable()
 export class ProductService {
   
-	constructor(private http:Http) { }
+    constructor(private http:Http) { }
+    
+    public getProduct(productId:number): Observable<Product> {
+        return this.http.get(url+productId)
+		        .map(this.extractData)
+		        .catch(this.handleErrorObservable);
+    }
     
     public getProducts(): Observable<Product[]> {
         return this.http.get(url)

@@ -1,6 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { DataTable, DataTableResource } from '../data-table';
 import { product } from './product-data';
+import { CartService } from '../../services/cart.service';
+import { Product } from '../../pojos/Product';
+declare var $: any;
 
 @Component({
   selector: 'app-cart',
@@ -13,14 +16,15 @@ export class CartComponent implements OnInit {
   product = [];
   productCount = 0;
   totalPrice: number = 0;
-  ano = 11 + 3;
 
   @ViewChild(DataTable) cartTable: DataTable;
 
   calPrice() {
+    this.totalPrice = 0;
     this.product.forEach(element => {
-      this.totalPrice = 0;
-      this.totalPrice += Number(element.price);
+      
+      this.totalPrice += Number(element.price)*element.quantity;
+      this.cdr.detectChanges();
     });
       }
 
@@ -30,21 +34,35 @@ export class CartComponent implements OnInit {
 
   }
 
-  addProduct($event){
-    product.push({ name: 'Cofee', quantity: '4', price: 100});
-    this.reloadCars($event);
-  }
-
   deleteProduct(item) {
+    this.cartService.removeProduct(item);
     this.product.splice(
       this.product.indexOf(item), 1
     );
     this.calPrice();
   }
-  constructor() {
-    this.productResource= new DataTableResource(product);
+
+  updateProduct(item){
+    console.log(item.quantity);
+    this.cartService.updateProductCount(item.productId, item.quantity);
+  }
+
+  constructor(private cartService: CartService, private cdr: ChangeDetectorRef) {
+    let products = cartService.getOrder().products;
+    this.productResource= new DataTableResource(products);
     this.productResource.count().then(count => this.productCount = count);
    }
+
+  //  myf(products:Product[]){
+  //   let productOrder; //{product,count}
+  //   products.forEach((product)=>{
+
+  //   });
+  //  }
+
+   ngAfterViewChecked(){
+    this.calPrice();
+  }
 
   ngOnInit() {
   }

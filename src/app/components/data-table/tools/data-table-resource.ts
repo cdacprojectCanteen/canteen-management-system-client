@@ -2,7 +2,7 @@ import { DataTableParams } from '../components/types';
 
 
 export class DataTableResource<T> {
-
+    
     constructor(private items: T[]) {}
 
     query(params: DataTableParams, filter?: (item: T, index: number, items: T[]) => boolean): Promise<T[]> {

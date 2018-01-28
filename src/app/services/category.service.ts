@@ -19,7 +19,7 @@ export class CategoryService {
       .catch(this.handleErrorObservable);
   }
 
-  addCategory(category: Category): Observable<Category> {
+  addCategory(category: Category): Observable<number> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Access-Control-Allow-Origin', '*');
@@ -27,6 +27,20 @@ export class CategoryService {
     return this.http.post(url, category, options)
       .map(this.extractData)
       .catch(this.handleErrorObservable);
+  }
+  updateCategory(category: Category): Observable<Category> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Access-Control-Allow-Origin', '*');
+    let options = new RequestOptions({ headers: headers });
+    return this.http.put(url, category, options)
+      .map(this.extractData)
+      .catch(this.handleErrorObservable);
+  }
+  deleteCategory(categoryId: number): Observable<Category> {
+    return this.http.delete(url+categoryId)
+		        .map(this.extractData)
+		        .catch(this.handleErrorObservable);
   }
   private extractData(res: Response) {
     let body = res.json();

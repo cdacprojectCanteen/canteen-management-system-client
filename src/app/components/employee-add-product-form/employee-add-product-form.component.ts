@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import {
   ReactiveFormsModule,
   FormsModule,
@@ -11,8 +11,10 @@ import { Product } from '../../pojos/Product';
 import { ProductService } from '../../services/product.service';
 import { Category } from '../../pojos/Category';
 import { CategoryService } from '../../services/category.service';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { OnDestroy, AfterViewInit, AfterContentChecked } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Subscription } from 'rxjs/Subscription';
+import { config } from '../../config';
+import { UpdateProductChannelService } from '../../services/update-product-channel.service';
 declare var $: any;
 
 
@@ -23,19 +25,26 @@ declare var $: any;
 })
 export class EmployeeAddProductFormComponent implements OnInit, OnDestroy {
 
+  _updateProduct: Product = null;
+
   private errorMessage: string;
   @ViewChild("fileInput") fileInput;
 
   private _productPicUrl: string;
+  private _productPicUrl2: string;
   private _addProductForm: FormGroup;
   private _categories: Category[];
 
+  @Output() onProductAdded = new EventEmitter<Product>();
+  @Output() onProductUpdated = new EventEmitter<Product>();
+
   private subscriptions: Subscription = new Subscription();
 
-  constructor(private productService: ProductService, private categoryService: CategoryService) {
-    this._productPicUrl = "../../../assets/images/user_male.png";
+  constructor(private productService: ProductService, private categoryService: CategoryService, private updateProductService: UpdateProductChannelService) {
+    // this._productPicUrl = (this._updateProduct)?config.imageUrl+this._updateProduct.productImageUrl:'../../../assets/images/user_male.png';
     var subscription = this.categoryService.getCategories().subscribe(categories => { this._categories = categories });
     this.subscriptions.add(subscription);
+    
   }
 
   ngOnDestroy() {
@@ -43,20 +52,20 @@ export class EmployeeAddProductFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this._addProductForm.controls);
+    
     let product = new Product();
     product.name = this._addProductForm.controls.name.value;
     let category = new Category();
     category.categoryId = this._addProductForm.controls.category.value;
-    product.category = category; console.log(product.category);
+    product.category = category;
     product.price = this._addProductForm.controls.price.value;
     product.quantity = this._addProductForm.controls.quantity.value;
-    let tags = (this._addProductForm.controls.tags.value) ? this._addProductForm.controls.tags.value.split(","):[];
+    let tags = (this._addProductForm.controls.tags.value) ? this._addProductForm.controls.tags.value.toString().split(","):[];
     product.tags = tags;
     product.description = this._addProductForm.controls.description.value;
-    product.productImageUrl = this._addProductForm.controls.productImageUrl.value;
-    console.log(product);//this._addProductForm.controls.productPicUrl.
+    product.productImageUrl = this._productPicUrl2;
     this.addProduct(product);
+    
     $('#addProductModal').modal('hide');
   }
 
@@ -71,20 +80,40 @@ export class EmployeeAddProductFormComponent implements OnInit, OnDestroy {
       fileToUpload = null;
     }
 
-    var subscription = this.productService.addProduct(product, fileToUpload)
-      .subscribe(product => {
-        console.log(product);
+    var subscription;
+
+      if(this._updateProduct == null){
+        
+        subscription = this.productService.addProduct(product, fileToUpload)
+        .subscribe(productId => {
+          this.productService.getProduct(productId).subscribe(productRec=>{
+            console.log(productRec);
+            this.onProductAdded.emit(productRec);
+          });
+          
+        },
+        error => this.errorMessage = <any>error);
+      }
+      else{
+        product.productId = this._updateProduct.productId;
+        subscription = this.productService.updateProduct(product, fileToUpload)
+      .subscribe(productRec => {
+        console.log(productRec);
+        this.onProductUpdated.emit(productRec);
       },
       error => this.errorMessage = <any>error);
+      }
     this.subscriptions.add(subscription);
   }
 
   readUrl(event:any) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-  
+      this._productPicUrl2 = event.target.files.item(0).name;
+  console.log(this._productPicUrl2);
       reader.onload = (event:any) => {
         this._productPicUrl = event.target.result;
+        
       }
   
       reader.readAsDataURL(event.target.files[0]);
@@ -97,9 +126,29 @@ export class EmployeeAddProductFormComponent implements OnInit, OnDestroy {
       category: new FormControl('Please select a category'),
       price: new FormControl('', [Validators.required, Validators.min(0)]),
       quantity: new FormControl('', [Validators.required, Validators.min(0)]),
-      tags: new FormControl(),
-      description: new FormControl(),
+      tags: new FormControl(''),
+      description: new FormControl(''),
       productImageUrl: new FormControl()
+    });
+
+    this.updateProductService.getProduct().subscribe((product)=>{
+      this._productPicUrl = (product!=null)?config.imageUrl+product.productImageUrl:'../../../assets/images/user_male.png';
+      if(product!=null){
+        console.log('update arrived')
+        this._updateProduct = product;
+        this._addProductForm.setValue({
+          name: product.name,
+          category: product.category.categoryId,
+          price: product.price,
+          quantity: product.quantity,
+          tags: product.tags,
+          description: product.description,
+          productImageUrl: ''
+        });
+      }
+      else{
+        this._addProductForm.reset({category:'Please select a category'});
+      }
     });
 
     $("#imgBrowse").click(()=>{
