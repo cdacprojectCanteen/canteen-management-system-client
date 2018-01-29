@@ -4,20 +4,18 @@ import { Observable } from 'rxjs/Observable';
 import { AccountService } from '../services/account.service';
 
 @Injectable()
-export class CustomerGuard implements CanActivate {
+export class AnyExceptEmployeeGuard implements CanActivate {
   isEmployee: boolean = false;
-  isLoggedIn: boolean = false;
   constructor(private accountService: AccountService, private router: Router) {
     this.accountService.IsEmployee().subscribe(isEmployee=>this.isEmployee=isEmployee);
-    this.accountService.IsLoggedIn().subscribe(isLoggedIn=>this.isLoggedIn=isLoggedIn);
   }
 
   canActivate(){
     
     // console.log(this.isEmployee);
-    if(!this.isEmployee && this.isLoggedIn)
+    if(!this.isEmployee)
       return true;
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/employee');
     return false;
   }
 }

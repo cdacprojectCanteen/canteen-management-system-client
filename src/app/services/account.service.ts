@@ -55,34 +55,34 @@ export class AccountService {
   public restoreLoginState() {
     console.log('Restoring login state');
     if (localStorage.getItem('isLoggedIn') == 'true') {
-      console.log('Login exists');
+      // console.log('Login exists');
       // this.isLoggedIn = true;
       // this.loginObserver.next(true);
       this.loginChange.next(true);
       if (localStorage.getItem('isEmployee') == 'true') {
-        console.log('Is Employee');
+        // console.log('Is Employee');
         this.isEmployeeChange.next(true);
         this.employeeService
           .getEmployee(parseInt(localStorage.getItem('employee')))
           .subscribe(employee => {
-            console.log('got employee');
-            console.log(employee);
+            // console.log('got employee');
+            // console.log(employee);
             this.employeeChange.next(employee);
           });
       }
       else {
-        console.log('Is Customer');
+        // console.log('Is Customer');
         this.customerService
           .getCustomer(parseInt(localStorage.getItem('customer')))
           .subscribe(customer => {
-            console.log('got customer');
-            console.log(customer);
+            // console.log('got customer');
+            // console.log(customer);
             this.customerChange.next(customer);
           });
       }
     }
     else {
-      console.log('login state does not exist');
+      // console.log('login state does not exist');
     }
   }
 
@@ -99,16 +99,16 @@ export class AccountService {
 
   public doCustomerLogin(username: string, password: string): BehaviorSubject<boolean> {
     this.customerLogin(username, password).subscribe(customer => {
-      console.log(customer);
-      console.log("ID: " + customer.id);
+      // console.log(customer);
+      // console.log("ID: " + customer.id);
       if (customer === null || customer === undefined || customer.id === -1) {
-        console.log("Invalid Customer");
-        console.log(customer);
+        // console.log("Invalid Customer");
+        // console.log(customer);
         // this.loginObserver.next(false);
         this.loginChange.next(false);
       }
       else {
-        console.log("Valid Customer");
+        // console.log("Valid Customer");
         // this.isLoggedIn = true;
         this.customerChange.next(customer);
 
@@ -138,16 +138,16 @@ export class AccountService {
 
   public doEmployeeLogin(username: string, password: string) : BehaviorSubject<boolean>{
     this.employeeLogin(username, password).subscribe(employee => {
-      console.log(employee);
-      console.log("ID: " + employee.id);
+      // console.log(employee);
+      // console.log("ID: " + employee.id);
       if (employee === null || employee === undefined || employee.id === -1) {
-        console.log("Invalid Employee");
-        console.log(employee);
+        // console.log("Invalid Employee");
+        // console.log(employee);
         // this.loginObserver.next(false);
         this.loginChange.next(false);
       }
       else {
-        console.log("Valid Employee");
+        // console.log("Valid Employee");
         // this.isLoggedIn = true;
         this.employeeChange.next(employee)
         this.isEmployeeChange.next(true);

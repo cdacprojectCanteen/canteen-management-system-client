@@ -14,6 +14,6 @@
 				style="color: green;">{{product.price/product.oldPrice | percent}} off</span>
 		</h6>
 		<p class="card-text" style="max-height: 5em; min-height: 5em; overflow: hidden;">{{product.description}}</p>
-		<a href="#" class="btn btn-outline-primary">Add to cart</a>
+		<a class="btn btn-outline-primary" (click)="addProduct(product)">Add to cart</a>
 	</div>
 </div>

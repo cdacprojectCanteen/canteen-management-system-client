@@ -1,6 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { DataTable, DataTableResource } from '../data-table';
 import { product } from './product-data';
+import { CartService } from '../../services/cart.service';
+import { Product } from '../../pojos/Product';
+import { Router } from '@angular/router';
+declare var $: any;
 
 @Component({
   selector: 'app-cart',
@@ -13,14 +17,17 @@ export class CartComponent implements OnInit {
   product = [];
   productCount = 0;
   totalPrice: number = 0;
-  ano = 11 + 3;
+  couponCode: string = null;
+  itemToRemove = null;
 
   @ViewChild(DataTable) cartTable: DataTable;
 
   calPrice() {
+    this.totalPrice = 0;
     this.product.forEach(element => {
-      this.totalPrice = 0;
-      this.totalPrice += Number(element.price);
+      
+      this.totalPrice += Number(element.price)*element.quantity;
+      this.cdr.detectChanges();
     });
       }
 
@@ -30,21 +37,63 @@ export class CartComponent implements OnInit {
 
   }
 
-  addProduct($event){
-    product.push({ name: 'Cofee', quantity: '4', price: 100});
-    this.reloadCars($event);
-  }
-
-  deleteProduct(item) {
+  deleteProduct() {
+    this.cartService.removeProduct(this.itemToRemove);
     this.product.splice(
-      this.product.indexOf(item), 1
+      this.product.indexOf(this.itemToRemove), 1
     );
     this.calPrice();
   }
-  constructor() {
-    this.productResource= new DataTableResource(product);
+
+  updateProduct(item){
+    console.log(item.quantity);
+    this.cartService.updateProductCount(item.productId, item.quantity);
+  }
+
+  constructor(private cartService: CartService, private cdr: ChangeDetectorRef, private router: Router) {
+    let products = cartService.getOrder().products;
+    this.productResource= new DataTableResource(products);
     this.productResource.count().then(count => this.productCount = count);
    }
+
+  //  myf(products:Product[]){
+  //   let productOrder; //{product,count}
+  //   products.forEach((product)=>{
+
+  //   });
+  //  }
+
+   ngAfterViewChecked(){
+    this.calPrice();
+  }
+
+  checkout(){
+    if(this.cartService.getOrder().products.length>0){
+      this.cartService.placeOrder().subscribe(coupon=>{
+        console.log(coupon);
+        this.cartService.clearCart();
+        // this.productResource= new DataTableResource(this.cartService.getOrder().products);
+        // this.cartTable.reloadItems();
+        
+        this.couponCode = coupon;
+        $('#orderSuccessfulDialogModal').modal('show');
+      });
+    }
+    else{
+      $('#noItemsInCartDialogModal').modal('show');
+    }
+  }
+  
+  orderSuccessDialogClosed(){
+    this.router.navigateByUrl('/orders');
+  }
+
+  removeFromCart(item){
+    console.log('clicked')
+    this.itemToRemove = item;
+    console.log(this.itemToRemove);
+    // $('#confirmDialogModal').modal('show');
+  }
 
   ngOnInit() {
   }

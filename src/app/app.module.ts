@@ -35,6 +35,19 @@ import { CustomerGuard } from './guards/customer.guard';
 import { CategoryService } from './services/category.service';
 import { DataTableModule } from './components/data-table';
 import { CommonModule } from '@angular/common';
+import { EmployeeManageProductCategoriesComponent } from './components/employee-manage-product-categories/employee-manage-product-categories.component';
+import { ProductlistComponent } from './components/productlist/productlist.component';
+import { UpdateProductChannelService } from './services/update-product-channel.service';
+import { CartComponent } from './components/cart/cart.component';
+import { CartService } from './services/cart.service';
+import { AnyExceptEmployeeGuard } from './guards/any-except-employee.guard';
+import { EmployeeAddCategoryComponent } from './components/employee-add-category/employee-add-category.component';
+import { CategoryListComponent } from './components/categorylist/categorylist.component';
+import { UpdateCategoryService } from './services/update-category.service';
+import { EmployeeOrderListComponent } from './components/employee-order-list/employee-order-list.component';
+import { OrderService } from './services/order.service';
+import { UpdateOrderService } from './services/update-order.service';
+import { CustomerOrderListComponent } from './components/customer-order-list/customer-order-list.component';
 
 
 const routes: Routes = [
@@ -43,8 +56,10 @@ const routes: Routes = [
     redirectTo : "/menu",
     pathMatch : 'full'
   },
-  {path : 'menu', component : MenuComponent, canActivate: [CustomerGuard]},
-  {path : 'home', component: HomeComponent, canActivate: [CustomerGuard]},
+  {path : 'menu', component : MenuComponent, canActivate: [AnyExceptEmployeeGuard]},
+  {path : 'home', component: HomeComponent, canActivate: [AnyExceptEmployeeGuard]},
+  {path : 'cart', component: CartComponent, canActivate: [CustomerGuard]},
+  {path : 'orders', component: CustomerOrderListComponent, canActivate: [CustomerGuard]},
   {path : 'dashboard', redirectTo: 'employee/dashboard', pathMatch: 'full'},
   {path : 'employee', component: EmployeeHomeComponent, canActivate: [EmployeeGuard],
           children: [
@@ -52,6 +67,7 @@ const routes: Routes = [
             {path: 'dashboard', component: EmployeeDashboardComponent},
             {path: 'orders', component: EmployeeViewOrdersComponent},
             {path: 'products', component: EmployeeManageProductsComponent},
+            {path: 'products/categories', component: EmployeeManageProductCategoriesComponent},
             {path: 'manage', component: EmployeeManageEmployeesComponent},
             {path: 'history', component: EmployeeViewOrderHistoryComponent},
           ]},
@@ -78,7 +94,14 @@ const routes: Routes = [
     EmployeeAddProductFormComponent,
     EmployeeAddEmployeeFormComponent,
     EmployeeViewOrderHistoryComponent,
-    EmployeeHomeComponent
+    EmployeeHomeComponent,
+    EmployeeManageProductCategoriesComponent,
+    ProductlistComponent,
+    CartComponent,
+    EmployeeAddCategoryComponent,
+    CategoryListComponent,
+    EmployeeOrderListComponent,
+    CustomerOrderListComponent
   ],
   imports: [
     BrowserModule,
@@ -96,8 +119,14 @@ const routes: Routes = [
     AccountService,
     EmployeeService,
     CategoryService,
+    UpdateProductChannelService,
+    CartService,
+    OrderService,
+    UpdateOrderService,
+    UpdateCategoryService,
     EmployeeGuard,
-    CustomerGuard
+    CustomerGuard,
+    AnyExceptEmployeeGuard
   ],
   bootstrap: [AppComponent]
 })

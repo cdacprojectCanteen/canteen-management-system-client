@@ -51,15 +51,16 @@ export class SignupFormComponent implements OnInit {
   addCustomer(customer: Customer): void {
     this.customerService.addCustomer(customer)
       .subscribe( customer => {
-                console.log(customer);						   
+                console.log(customer);
+                $('#signupModal').modal('hide');						   
            },
                     error => this.errorMessage = <any>error);
   }
 
   
   ngOnInit() {
-    // let emailValidator = new EmailValidator(this.customerService,null);
-    // let phoneNoValidator = new PhoneNoValidator(this.customerService,null);
+    let emailValidator = new EmailValidator(this.customerService,null);
+    let phoneNoValidator = new PhoneNoValidator(this.customerService,null);
     
     this._signupForm = new FormGroup({
       firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),

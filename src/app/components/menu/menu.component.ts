@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../pojos/Product';
 import { ProductService } from '../../services/product.service';
 import { Category } from '../../pojos/Category';
+import { Router } from '@angular/router';
+declare var $: any;
 
 @Component({
   selector: 'app-menu',
@@ -13,31 +15,24 @@ export class MenuComponent implements OnInit {
   products: Product[];
   errorMessage: String;
 
-  productToAdd : Product;
+  productAddedToCart: Product = null;
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private router: Router) { }
   ngOnInit() {
     this.fetchProducts();
-    this.productToAdd = new Product();
-    this.productToAdd.name = "Kaaju Katli";
-    var category = new Category();
-    category.categoryId=1;
-    this.productToAdd.category = category;
-    this.productToAdd.price = 30;
-    this.productToAdd.oldPrice = 50;
-    this.productToAdd.quantity = 30;
-    // this.addProduct(this.productToAdd);
   }
   fetchProducts(): void {
     this.productService.getProducts()
       .subscribe(products => this.products = products,
       error => this.errorMessage = <any>error);
   }
-  // addProduct(product: Product): void {
-  //   this.productService.addProduct(product)
-  //     .subscribe( product => {
-  //               this.fetchProducts(); 						   
-  //          },
-  //                   error => this.errorMessage = <any>error);
-  // }
+
+  goToCart(){
+    this.router.navigateByUrl("/cart");
+  }
+
+  onProductAdded(product: Product) {
+    $('#addToCartSuccessModal').modal('show');
+    this.productAddedToCart = product;
+  }
 }
