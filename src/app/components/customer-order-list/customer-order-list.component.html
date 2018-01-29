@@ -1,0 +1,84 @@
+<div style="margin: auto;" class="text-center">
+  <data-table
+  [items]="order"
+  [itemCount]="orderCount"
+  (reload)="reloadOrders($event)"
+  
+  [pagination]="false"
+  [indexColumn]="false"
+  [selectColumn]="false"
+  [multiSelect]="false"
+  [rowColors]="rowColors"
+  >
+  
+  <data-table-column
+  property="orderId"
+  header="ID">
+  </data-table-column>
+
+
+  <data-table-column
+  header="Order list">
+  <ng-template #dataTableCell let-item="item">
+  <table style="width: 100%;">
+      <th>Name</th><th>Quantity</th>
+    <tr *ngFor="let product of item.products">
+      <td style="width:50%">{{product.name}}</td>
+      <td style="width:50%">{{product.quantity}}</td>
+    </tr>
+  </table>
+  </ng-template>
+  </data-table-column>
+
+
+
+  <data-table-column
+  header="Time">
+  <ng-template #dataTableCell let-item="item">
+  {{item.orderTime | date:'medium'}}
+</ng-template>
+  </data-table-column>
+
+
+  <data-table-column
+  property="status"
+  header="Status">
+  <ng-template #dataTableCell let-item="item">
+    {{(item.orderStatus=='READY')?'READY':'NOT READY'}}
+  </ng-template>
+  </data-table-column>
+
+  <data-table-column
+  header="Coupon Code">
+  <ng-template #dataTableCell let-item="item">
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#productlistModal" (click)="showCoupon(item)">
+    Coupon Code
+  </button>
+  
+  
+  </ng-template>
+  
+  </data-table-column>
+  </data-table>
+  <!-- Modal -->
+  <div class="modal" id="productlistModal" tabindex="-1" role="dialog" aria-labelledby="productlistModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="productlistModalLabel">Coupon Code</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Coupon Code : {{couponCode}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+    
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

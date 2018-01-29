@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Input } from '@angular/core/';
 import { Product } from '../../pojos/Product';
 import { config } from '../../config';
@@ -13,6 +13,7 @@ export class ProductBoxComponent implements OnInit {
 
   @Input() product : Product;
   imageUrl = config.imageUrl;
+  @Output() onProductAdded = new EventEmitter<Product>();
 
   constructor(private cartService: CartService) { }
 
@@ -20,7 +21,9 @@ export class ProductBoxComponent implements OnInit {
   }
 
   addProduct(product:Product){
-    this.cartService.addProduct(product);
+    if(this.cartService.addProduct(product)){
+      this.onProductAdded.emit(product);
+    }
   }
 
 }

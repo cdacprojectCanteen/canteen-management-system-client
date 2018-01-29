@@ -39,32 +39,11 @@ header="Amount">
 header="Cancel">
 <ng-template #dataTableCell let-item="item">
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDialogModal" (click)="removeFromCart(item)">
   ×
 </button>
 
-<!-- Modal -->
-<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-      
-        <button type="button" (click)="deleteProduct(item)" data-dismiss="modal" class="btn btn-primary">Delete Order</button>
-  
-      </div>
-    </div>
-  </div>
-</div>
+
 </ng-template>
 
 </data-table-column>
@@ -73,7 +52,73 @@ header="Cancel">
   Total Price: {{totalPrice}}{{ano}}
 </div>
 <div>
-  <button class="btn btn-primary">Check Out</button>
+  <button class="btn btn-primary" (click)="checkout()">Check Out</button>
 </div>
+
+<!-- Modal -->
+<div class="modal" id="confirmDialogModal" tabindex="-1" role="dialog" aria-labelledby="confirmDialogModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDialogModalLabel">Are you sure?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to remove {{(itemToRemove!=null)?itemToRemove.name:''}} from cart?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      
+        <button type="button" (click)="deleteProduct()" data-dismiss="modal" class="btn btn-danger">Remove</button>
+  
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- <div><button (click)="addProduct($event)">Add Product</button></div> -->
+<div class="modal" id="orderSuccessfulDialogModal" tabindex="-1" role="dialog" aria-labelledby="orderSuccessfulDialogModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderSuccessfulDialogModalLabel">Order Successful!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Your order has been placed successfully.<br>
+        Coupon code: <strong>{{couponCode}}</strong>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="orderSuccessDialogClosed()">Ok</button>
+      
+        <!-- <button type="button" (click)="orderSuccessfulDialogModalClose()" data-dismiss="modal" class="btn btn-primary">Delete Order</button> -->
+  
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="noItemsInCartDialogModal" tabindex="-1" role="dialog" aria-labelledby="noItemsInCartDialogModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="noItemsInCartDialogModalLabel">No items to checkout</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        There are no Items in the cart
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
 </div>

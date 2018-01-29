@@ -3,12 +3,14 @@ import { Order } from '../pojos/Order';
 import { AccountService } from './account.service';
 import { Product } from '../pojos/Product';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { OrderService } from './order.service';
 
 @Injectable()
 export class CartService {
   private order: Order;
 
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService, private orderService: OrderService) {
     if(localStorage.getItem('cart')===null){
       this.order = new Order();
       this.order.products = [];
@@ -23,12 +25,12 @@ export class CartService {
 
     
     this.accountService.getCustomer().subscribe(customer=>{
-      // this.order.customer = customer;
-      // localStorage.setItem('cart',JSON.stringify(this.order));
+      this.order.customer = customer;
+      localStorage.setItem('cart',JSON.stringify(this.order));
     });
    }
 
-  public addProduct(product:Product){
+  public addProduct(product:Product): boolean{
     // if(this.getProduct(product.productId) == null){
     if(this.order.products.indexOf(product) === -1){
       product.quantity = 1;
@@ -40,6 +42,7 @@ export class CartService {
     
     console.log(this.order);
     localStorage.setItem('cart',JSON.stringify(this.order));
+    return true;
   }
 
   public getProduct(productId:number): Product{
@@ -75,5 +78,16 @@ export class CartService {
 
   public getOrder(): Order{
     return this.order;
+  }
+
+  public placeOrder():Observable<string>{
+    this.order.orderTime=new Date();
+    console.log(this.order);
+    return this.orderService.addOrder(this.order);
+  }
+
+  public clearCart(){
+    this.order.products = [];
+    localStorage.setItem('cart', JSON.stringify(this.order));
   }
 }

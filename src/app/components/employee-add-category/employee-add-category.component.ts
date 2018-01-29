@@ -35,7 +35,7 @@ export class EmployeeAddCategoryComponent implements OnInit {
     
     this.addCategory(category);
     
-    $('#addCategory').modal('hide');
+    $('#addCategoryModal').modal('hide');
   }
 
   addCategory(category: Category): void {

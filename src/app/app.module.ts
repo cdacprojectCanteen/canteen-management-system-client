@@ -44,6 +44,10 @@ import { AnyExceptEmployeeGuard } from './guards/any-except-employee.guard';
 import { EmployeeAddCategoryComponent } from './components/employee-add-category/employee-add-category.component';
 import { CategoryListComponent } from './components/categorylist/categorylist.component';
 import { UpdateCategoryService } from './services/update-category.service';
+import { EmployeeOrderListComponent } from './components/employee-order-list/employee-order-list.component';
+import { OrderService } from './services/order.service';
+import { UpdateOrderService } from './services/update-order.service';
+import { CustomerOrderListComponent } from './components/customer-order-list/customer-order-list.component';
 
 
 const routes: Routes = [
@@ -54,7 +58,8 @@ const routes: Routes = [
   },
   {path : 'menu', component : MenuComponent, canActivate: [AnyExceptEmployeeGuard]},
   {path : 'home', component: HomeComponent, canActivate: [AnyExceptEmployeeGuard]},
-  {path : 'cart', component: CartComponent, canActivate: [AnyExceptEmployeeGuard]},
+  {path : 'cart', component: CartComponent, canActivate: [CustomerGuard]},
+  {path : 'orders', component: CustomerOrderListComponent, canActivate: [CustomerGuard]},
   {path : 'dashboard', redirectTo: 'employee/dashboard', pathMatch: 'full'},
   {path : 'employee', component: EmployeeHomeComponent, canActivate: [EmployeeGuard],
           children: [
@@ -94,7 +99,9 @@ const routes: Routes = [
     ProductlistComponent,
     CartComponent,
     EmployeeAddCategoryComponent,
-    CategoryListComponent
+    CategoryListComponent,
+    EmployeeOrderListComponent,
+    CustomerOrderListComponent
   ],
   imports: [
     BrowserModule,
@@ -114,6 +121,8 @@ const routes: Routes = [
     CategoryService,
     UpdateProductChannelService,
     CartService,
+    OrderService,
+    UpdateOrderService,
     UpdateCategoryService,
     EmployeeGuard,
     CustomerGuard,
