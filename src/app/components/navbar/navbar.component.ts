@@ -14,6 +14,7 @@ import { Customer } from '../../pojos/Customer';
 import { AccountService } from '../../services/account.service';
 import 'rxjs/add/operator/map';
 import { CustomerService } from '../../services/customer.service';
+import { EmployeeService } from '../../services/employee.service';
 declare var $: any;
 
 
@@ -30,8 +31,9 @@ export class NavbarComponent implements OnInit {
   private invalidLogin = false;
   private userFirstName: string;
   private isEmployee: boolean;
+  // private changePassSuccess: string = '';
 
-  constructor(private accountService: AccountService, private router: Router) {
+  constructor(private accountService: AccountService, private employeeService: EmployeeService, private customerService: CustomerService, private router: Router) {
     this.accountService.IsLoggedIn().subscribe(loggedIn => {
       this.loggedIn = loggedIn;
       console.log('updated loggedIn value in navbar');
@@ -84,4 +86,23 @@ export class NavbarComponent implements OnInit {
       $('#needLoginModal').modal('show');
     }
   }
+
+  // changePassword(oldPass,newPass,confirmPass){
+  //   if(this.isEmployee){
+  //     this.accountService.getEmployee().subscribe(employee=>{
+        
+  //         this.employeeService.updatePassword(employee.id, oldPass.value, newPass.value).subscribe(employee=>{
+  //           if(employee.id !== -1){
+  //               this.changePassSuccess = 'Password changed Successfully. Please login againg to continue';
+  //           }
+  //           else{
+  //             this.changePassSuccess = 'Old password is wrong';
+  //           }
+  //         });
+  //     });
+  //   }
+  //   else{
+
+  //   }
+  // }
 }

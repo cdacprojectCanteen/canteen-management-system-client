@@ -21,8 +21,17 @@ export class RedeemCouponComponent implements OnInit {
   ngOnInit() {
   }
 
+  resetFlags(){
+    this.order = null;
+    this.invalid = false;
+    this.redeemed = false;
+    this.orderNotReady = false;
+    this.orderAlreadyDelivered = false;
+  }
+
   findOrderByCoupon(item){
     console.log(item.value);
+    this.resetFlags();
     this.orderService.getOrderByCoupon(item.value).subscribe(order=>{
       console.log(order);
       if(order.orderId!=-1){
@@ -45,15 +54,17 @@ export class RedeemCouponComponent implements OnInit {
     });
   }
 
-  redeem(){
+  redeem(couponText){
     this.order.orderStatus='DELIVERED';
     this.orderService.updateOrder(this.order).subscribe(order=>{
-      this.order = null;
-      this.invalid = false;
-      this.redeemed = false;
-      this.orderNotReady = false;
-      this.orderAlreadyDelivered = false;
+      couponText.value='';
+      this.resetFlags();
     });
+  }
+
+  redeemDialogClosed(couponText){
+    this.resetFlags();
+    couponText.value = '';
   }
 
 }

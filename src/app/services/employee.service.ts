@@ -34,6 +34,17 @@ export class EmployeeService {
                    .map(this.extractData)
                    .catch(this.handleErrorObservable);
     }
+
+    public updatePassword(id: number, oldPassword: string, newPassword: string){
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Access-Control-Allow-Origin', '*');
+        let options = new RequestOptions({ headers: headers });
+        return this.http.put(url+'UpdatePassword/'+id, {'oldPassword':oldPassword,'newPassword':newPassword},options)
+                        .map(this.extractData)
+                        .catch(this.handleErrorObservable);
+    }
+
     public checkUniqueEmail(email: string){
         let headers = new Headers();
         headers.append('Access-Control-Allow-Origin', '*');
