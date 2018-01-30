@@ -1,10 +1,12 @@
 <div>
-    <button type="button" (click)="myf()" class="btn btn-primary"data-toggle="modal" data-target="#addProductModal">
+    <button style="margin-left: 10px; margin-top: 20px;" type="button"
+     (click)="openAddProductDialog()" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addProductModal">
         Add Product
       </button>
-    <app-employee-add-product-form (onProductAdded)="onProductAdded($event)" (onProductUpdated)="onProductUpdated($event)"></app-employee-add-product-form>
+    <app-employee-add-product-form (onProductAdded)="onProductAdded($event)"
+     (onProductUpdated)="onProductUpdated($event)"></app-employee-add-product-form>
 </div>
-<div style="margin: auto;">
+<div style="margin: auto;" class="text-center">
   <data-table
   [items]="product"
   [itemCount]="productCount"
@@ -40,10 +42,10 @@
   header="Price">
   </data-table-column>
 
-  <data-table-column
+  <!-- <data-table-column
   property="quantity"
   header="Quantity">
-  </data-table-column>
+  </data-table-column> -->
 
 
   <data-table-column
@@ -64,41 +66,20 @@
   <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#updateProductModal">
     Update
   </button> -->
-  <button type="button" (click)="myf2(item)" class="btn btn-info"data-toggle="modal" data-target="#addProductModal">
+  <button type="button" (click)="openUpdateProductDialog(item)" class="btn btn-info"data-toggle="modal" data-target="#addProductModal">
       Update
     </button>
-  <!-- <app-employee-add-product-form *ngIf="tval2" (onProductAdded)="onProductAdded($event)" [_updateProduct]="item"></app-employee-add-product-form> -->
   </ng-template>
   </data-table-column>
   <data-table-column
   header="Delete">
   <ng-template #dataTableCell let-item="item">
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#productlistModal">
+  <button type="button" (click)="showConfirmDeleteProduct(item)" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteProductModal">
     Delete
   </button>
   
-  <!-- Modal -->
-  <div class="modal" id="productlistModal" tabindex="-1" role="dialog" aria-labelledby="confirmDialogModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="confirmDialogModalLabel">Are you sure to Delete?</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        
-          <button type="button" (click)="deleteProduct(item)" data-dismiss="modal" class="btn btn-primary">Delete Order</button>
-    
-        </div>
-      </div>
-    </div>
-  </div>
+  
   </ng-template>
   
   </data-table-column>
@@ -106,5 +87,26 @@
   <div>
   </div>
   
-  
+  <!-- Modal -->
+  <div class="modal" id="confirmDeleteProductModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteProductModalLabel">Are you sure to Delete?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete {{(productToDelete!=null)?productToDelete.name:''}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        
+          <button type="button" (click)="deleteProduct()" data-dismiss="modal" class="btn btn-primary">Delete Product</button>
+    
+        </div>
+      </div>
+    </div>
+  </div>
   </div>

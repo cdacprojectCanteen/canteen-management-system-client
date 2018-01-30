@@ -16,33 +16,28 @@ export class ProductlistComponent implements OnInit {
   productCount = 0;
   @ViewChild(DataTable) productTable: DataTable;
   position: number;
+  productToDelete: Product = null;
 
   reloadProducts(params) {
     this.productResource.query(params).then(productslist => this.product = productslist);
 
   }
-tval = false;
-  myf(){
-    this.tval=true;
-    console.log('Hello');
+  openAddProductDialog(){
     this.updateProductService.setProduct(null);
   }
 
-  tval2 = false;
-  myf2(item){
-    this.tval2=true;
-    console.log('Hello');
+  openUpdateProductDialog(item){
     this.updateProductService.setProduct(item);
   }
 
-  deleteProduct(item) {
-    // this.product.splice(
-    //   this.product.indexOf(item), 1
-    // );
-    // console.log(item.productId);
-    this.productService.deleteProduct(item.productId).subscribe(product=>{
+  showConfirmDeleteProduct(item){
+    this.productToDelete = item;
+  }
+
+  deleteProduct() {
+    this.productService.deleteProduct(this.productToDelete.productId).subscribe(product=>{
       this.product.splice(
-        this.product.indexOf(item), 1
+        this.product.indexOf(this.productToDelete), 1
       );
       // this.productCount = this.product.length;
     });

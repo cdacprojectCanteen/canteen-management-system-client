@@ -7,7 +7,7 @@ export class Order {
     public customer : Customer;
     public products : Array<Product>;
     public orderTime : Date;
-    public transactionNo : number;
+    // public transactionNo : number;
 	public couponCode : string;
 	public orderStatus : string;
 

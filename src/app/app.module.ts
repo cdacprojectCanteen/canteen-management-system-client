@@ -48,6 +48,7 @@ import { EmployeeOrderListComponent } from './components/employee-order-list/emp
 import { OrderService } from './services/order.service';
 import { UpdateOrderService } from './services/update-order.service';
 import { CustomerOrderListComponent } from './components/customer-order-list/customer-order-list.component';
+import { RedeemCouponComponent } from './components/redeem-coupon/redeem-coupon.component';
 
 
 const routes: Routes = [
@@ -101,7 +102,8 @@ const routes: Routes = [
     EmployeeAddCategoryComponent,
     CategoryListComponent,
     EmployeeOrderListComponent,
-    CustomerOrderListComponent
+    CustomerOrderListComponent,
+    RedeemCouponComponent
   ],
   imports: [
     BrowserModule,

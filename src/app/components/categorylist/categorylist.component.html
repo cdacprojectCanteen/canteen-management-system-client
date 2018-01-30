@@ -1,5 +1,5 @@
-<div>
-  <button type="button" (click)="myf()" class="btn btn-primary" data-toggle="modal" data-target="#addCategoryModal">
+<div style="margin-top: 20px;">
+  <button type="button" (click)="showAddCategory()" class="btn btn-primary btn-lg offset-md-4" data-toggle="modal" data-target="#addCategoryModal">
     Add Category
   </button>
   <app-employee-add-category (onCategoryAdded)="onCategoryAdded($event)" (onCategoryUpdated)="onCategoryUpdated($event)"></app-employee-add-category>
@@ -21,7 +21,7 @@
   <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#updateProductModal">
     Update
   </button> -->
-  <button type="button" (click)="myf2(item)" class="btn btn-info"data-toggle="modal" data-target="#addCategoryModal">
+  <button type="button" (click)="showUpdateCategory(item)" class="btn btn-info"data-toggle="modal" data-target="#addCategoryModal">
       Update
     </button>
   <!-- <app-employee-add-product-form *ngIf="tval2" (onProductAdded)="onProductAdded($event)" [_updateProduct]="item"></app-employee-add-product-form> -->
@@ -30,33 +30,35 @@
     <data-table-column header="Delete">
       <ng-template #dataTableCell let-item="item">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#categorylistModal">
+        <button type="button" (click)="showDeleteConfirmation(item)" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteCategoryModal">
           Delete
         </button>
 
-        <!-- Modal -->
-        <div class="modal" id="categorylistModal" tabindex="-1" role="dialog" aria-labelledby="confirmDialogModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="confirmDialogModalLabel">Are you sure to Delete?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div class="modal-body">{{item.categoryId}}
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-
-                <button type="button" (click)="deleteCategory(item)" data-dismiss="modal" class="btn btn-primary">Delete Order</button>
-
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </ng-template>
 
     </data-table-column>
   </data-table>
+  <!-- Modal -->
+  <div class="modal" id="confirmDeleteCategoryModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteCategoryModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmDeleteCategoryModalLabel">Are you sure to Delete?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete {{(categoryToDelete)?categoryToDelete.name:''}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+            <button type="button" (click)="deleteCategory()" data-dismiss="modal" class="btn btn-primary">Delete Category</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
 </div>

@@ -34,24 +34,44 @@ export class SignupFormComponent implements OnInit {
 
   onSubmit(){
     console.log(this._signupForm.controls);
-    let customer = new Customer();
-    customer.firstName = this._signupForm.controls.firstName.value;
-    customer.lastName = this._signupForm.controls.lastName.value;
-    customer.email = this._signupForm.controls.email.value;
-    customer.passHash = this._signupForm.controls.password.value;
-    customer.phoneNo = this._signupForm.controls.phoneNo.value;
-    customer.gender = this._signupForm.controls.gender.value;
-    customer.dateOfBirth = this._signupForm.controls.dateOfBirth.value;
-    customer.dateOfJoining = new Date();
-    console.log(customer);
-    this.addCustomer(customer);
+
+    if(
+      this._signupForm.controls.firstName.valid
+                        &&
+      this._signupForm.controls.email.valid
+                        &&
+      this._signupForm.controls.password.valid
+                        &&
+      this._signupForm.controls.phoneNo.valid
+                        &&
+      this._signupForm.controls.gender.valid
+                        &&
+      this._signupForm.controls.dateOfBirth.valid
+    ){
+
+        let customer = new Customer();
+        customer.firstName = this._signupForm.controls.firstName.value;
+        customer.lastName = this._signupForm.controls.lastName.value;
+        customer.email = this._signupForm.controls.email.value;
+        customer.passHash = this._signupForm.controls.password.value;
+        customer.phoneNo = this._signupForm.controls.phoneNo.value;
+        customer.gender = this._signupForm.controls.gender.value;
+        customer.dateOfBirth = this._signupForm.controls.dateOfBirth.value;
+        customer.dateOfJoining = new Date();
+        console.log(customer);
+        this.addCustomer(customer);
+    }
+    else{
+      $('#signupErrorModal').modal('show');
+    }    
   }
   
 
   addCustomer(customer: Customer): void {
     this.customerService.addCustomer(customer)
-      .subscribe( customer => {
-                console.log(customer);
+      .subscribe( customerId => {
+                console.log(customerId);
+                $('#signupSuccessModal').modal('show');
                 $('#signupModal').modal('hide');						   
            },
                     error => this.errorMessage = <any>error);

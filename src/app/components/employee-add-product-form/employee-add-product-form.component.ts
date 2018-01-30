@@ -31,7 +31,7 @@ export class EmployeeAddProductFormComponent implements OnInit, OnDestroy {
   @ViewChild("fileInput") fileInput;
 
   private _productPicUrl: string;
-  private _productPicUrl2: string;
+  private _productPicUrl2: string = null;
   private _addProductForm: FormGroup;
   private _categories: Category[];
 
@@ -52,21 +52,34 @@ export class EmployeeAddProductFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+
+    if(
+      this._addProductForm.controls.name.valid
+                          &&
+      this._addProductForm.controls.category.valid
+                          &&
+      this._addProductForm.controls.price.valid
+                          &&
+      this._addProductForm.controls.tags.valid
+                          &&
+      this._addProductForm.controls.description.valid
+    ){
     
-    let product = new Product();
-    product.name = this._addProductForm.controls.name.value;
-    let category = new Category();
-    category.categoryId = this._addProductForm.controls.category.value;
-    product.category = category;
-    product.price = this._addProductForm.controls.price.value;
-    product.quantity = this._addProductForm.controls.quantity.value;
-    let tags = (this._addProductForm.controls.tags.value) ? this._addProductForm.controls.tags.value.toString().split(","):[];
-    product.tags = tags;
-    product.description = this._addProductForm.controls.description.value;
-    product.productImageUrl = this._productPicUrl2;
-    this.addProduct(product);
-    
-    $('#addProductModal').modal('hide');
+      let product = new Product();
+      product.name = this._addProductForm.controls.name.value;
+      let category = new Category();
+      category.categoryId = this._addProductForm.controls.category.value;
+      product.category = category;
+      product.price = this._addProductForm.controls.price.value;
+      // product.quantity = this._addProductForm.controls.quantity.value;
+      let tags = (this._addProductForm.controls.tags.value) ? this._addProductForm.controls.tags.value.toString().split(","):[];
+      product.tags = tags;
+      product.description = this._addProductForm.controls.description.value;
+      product.productImageUrl = this._productPicUrl2;
+      this.addProduct(product);
+      
+      $('#addProductModal').modal('hide');
+    }
   }
 
 
@@ -125,7 +138,7 @@ export class EmployeeAddProductFormComponent implements OnInit, OnDestroy {
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       category: new FormControl('Please select a category'),
       price: new FormControl('', [Validators.required, Validators.min(0)]),
-      quantity: new FormControl('', [Validators.required, Validators.min(0)]),
+      // quantity: new FormControl('', [Validators.required, Validators.min(0)]),
       tags: new FormControl(''),
       description: new FormControl(''),
       productImageUrl: new FormControl()
@@ -140,7 +153,7 @@ export class EmployeeAddProductFormComponent implements OnInit, OnDestroy {
           name: product.name,
           category: product.category.categoryId,
           price: product.price,
-          quantity: product.quantity,
+          // quantity: product.quantity,
           tags: product.tags,
           description: product.description,
           productImageUrl: ''

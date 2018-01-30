@@ -18,6 +18,7 @@ export class CategoryListComponent implements OnInit {
   categoryCount = 0;
   totalPrice: number = 0;
   position: number;
+  categoryToDelete: Category;
 
   @ViewChild(DataTable) categoryTable: DataTable;
 
@@ -25,23 +26,23 @@ export class CategoryListComponent implements OnInit {
     this.categoryResource.query(params).then(categories => this.category = categories);
 
   }
-tval = false;
-  myf(){
-    this.tval=true;
+
+  showAddCategory(){
     this.updateCategoryService.setCategory(null);
   }
 
-  tval2 = false;
-  myf2(item){
-    this.tval2=true;
+  showUpdateCategory(item){
     this.updateCategoryService.setCategory(item);
   }
 
+  showDeleteConfirmation(item){
+    this.categoryToDelete = item;
+  }
 
-  deleteCategory(item) {
-    this.categoryService.deleteCategory(item.categoryId).subscribe(category=>{
+  deleteCategory() {
+    this.categoryService.deleteCategory(this.categoryToDelete.categoryId).subscribe(category=>{
       this.category.splice(
-        this.category.indexOf(item), 1
+        this.category.indexOf(this.categoryToDelete), 1
       );
     });
   }

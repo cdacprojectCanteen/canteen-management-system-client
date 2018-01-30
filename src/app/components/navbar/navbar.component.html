@@ -13,7 +13,7 @@
           </ul> -->
             <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
                 <li class="nav-item order-2 order-md-1" *ngIf="!isEmployee">
-                    <a href="#" routerLink="/cart" class="nav-link" title="Shopping Cart" style="margin-right: 15px;">
+                    <a (click)="openCart()" class="nav-link" title="Shopping Cart" style="margin-right: 15px;">
                         <i class="fa fa-shopping-cart fa-fw fa-lg"></i>
                     </a>
                 </li>
@@ -36,7 +36,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input id="loginPassword" placeholder="Password" class="form-control form-control-sm" type="text" formControlName="password"
+                                    <input id="loginPassword" placeholder="Password" class="form-control form-control-sm" type="password" formControlName="password"
                                         required [ngClass]="{'is-invalid': _loginForm.controls.password.invalid && _loginForm.controls.password.dirty,
                    'is-valid': _loginForm.controls.password.valid && _loginForm.controls.password.dirty}">
                                     <div class="invalid-feedback" *ngIf="_loginForm.controls.password.invalid && _loginForm.controls.password.dirty">
@@ -49,11 +49,11 @@
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary btn-block">Login</button>
                                 </div>
-                                <div class="form-group text-xs-center">
+                                <!-- <div class="form-group text-xs-center">
                                     <small>
                                         <a href="#">Forgot password?</a>
                                     </small>
-                                </div>
+                                </div> -->
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signupModal">
                                     Sign Up
                                 </button>
@@ -90,10 +90,10 @@
                     <a routerLink="/" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/contactus">Contact Us</a>
+                    <a class="nav-link" routerLink="/contactus" *ngIf="!isEmployee">Contact Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">About</a>
+                    <a class="nav-link" *ngIf="!isEmployee">About</a>
                 </li>
                 <!-- <li class="nav-item"><a href="#" class="nav-link">More</a></li> -->
             </ul>
@@ -124,3 +124,22 @@
         </div>
     </div>
 </nav>
+<!-- Modal -->
+<div class="modal" id="needLoginModal" tabindex="-1" role="dialog" aria-labelledby="needLoginModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="needLoginModalLabel">Please login</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+		  Please login to view cart
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+		</div>
+	  </div>
+	</div>
+  </div>

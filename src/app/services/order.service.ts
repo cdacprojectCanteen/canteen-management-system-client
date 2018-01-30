@@ -8,6 +8,7 @@ import { Order } from '../pojos/Order';
 import { Customer } from '../pojos/Customer';
 
 const url = "http://localhost:8080/canteenmgmtserver/Order/";
+const customerUrl = "http://localhost:8080/canteenmgmtserver/Customer/";
 
 @Injectable()
 export class OrderService {
@@ -27,18 +28,34 @@ export class OrderService {
     }
 
     public getOrdersOf(customerId: Customer): Observable<Order[]> {
-        return this.http.get(url)
+        return this.http.get(customerUrl+customerId+'/Orders')
 		        .map(this.extractData)
 		        .catch(this.handleErrorObservable);
     }
 
-    public addOrder(customer:Order): Observable<string> {
+    public getOrderByCoupon(coupon): Observable<Order>{
+        return this.http.get(url+'GetOrderByCoupon/'+coupon)
+        .map(this.extractData)
+        .catch(this.handleErrorObservable);
+    }
+
+    public addOrder(order:Order): Observable<string> {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Access-Control-Allow-Origin', '*');
         let options = new RequestOptions({ headers: headers });
-        return this.http.post(url, customer, options)
+        return this.http.post(url, order, options)
                    .map(res=>res.text())
+                   .catch(this.handleErrorObservable);
+    }
+
+    public updateOrder(order:Order): Observable<Order> {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Access-Control-Allow-Origin', '*');
+        let options = new RequestOptions({ headers: headers });
+        return this.http.put(url, order, options)
+                   .map(this.extractData)
                    .catch(this.handleErrorObservable);
     }
 

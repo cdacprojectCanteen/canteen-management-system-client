@@ -35,19 +35,37 @@ export class EmployeeAddEmployeeFormComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this._addEmployeeForm.controls);
-    let employee = new Employee();
-    employee.firstName = this._addEmployeeForm.controls.firstName.value;
-    employee.lastName = this._addEmployeeForm.controls.lastName.value;
-    employee.email = this._addEmployeeForm.controls.email.value;
-    employee.passHash = this._addEmployeeForm.controls.password.value;
-    employee.phoneNo = this._addEmployeeForm.controls.phoneNo.value;
-    employee.gender = this._addEmployeeForm.controls.gender.value;
-    employee.dateOfBirth = this._addEmployeeForm.controls.dateOfBirth.value;
-    employee.dateOfJoining = new Date();
-    console.log(employee);
-    this.addEmployee(employee);
-    $('#addEmployeeModal').modal('hide');
+
+    if(
+      this._addEmployeeForm.controls.firstName.valid
+                          &&
+      this._addEmployeeForm.controls.email.valid
+                          &&
+      this._addEmployeeForm.controls.password.valid
+                          &&
+      this._addEmployeeForm.controls.phoneNo.valid
+                          &&
+      this._addEmployeeForm.controls.gender.valid
+                          &&
+      this._addEmployeeForm.controls.dateOfBirth.valid
+    ){
+
+        let employee = new Employee();
+        employee.firstName = this._addEmployeeForm.controls.firstName.value;
+        employee.lastName = this._addEmployeeForm.controls.lastName.value;
+        employee.email = this._addEmployeeForm.controls.email.value;
+        employee.passHash = this._addEmployeeForm.controls.password.value;
+        employee.phoneNo = this._addEmployeeForm.controls.phoneNo.value;
+        employee.gender = this._addEmployeeForm.controls.gender.value;
+        employee.dateOfBirth = this._addEmployeeForm.controls.dateOfBirth.value;
+        employee.dateOfJoining = new Date();
+        console.log(employee);
+        this.addEmployee(employee);
+        $('#addEmployeeModal').modal('hide');
+    }
+    else{
+      
+    }
   }
   
 

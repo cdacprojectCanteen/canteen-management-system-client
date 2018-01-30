@@ -44,7 +44,7 @@
   property="status"
   header="Status">
   <ng-template #dataTableCell let-item="item">
-    {{(item.orderStatus=='READY')?'READY':'NOT READY'}}
+    {{(item.orderStatus=='NEW')?'NOT READY':item.orderStatus}}
   </ng-template>
   </data-table-column>
 
@@ -72,7 +72,7 @@
           </button>
         </div>
         <div class="modal-body">
-          Coupon Code : {{couponCode}}
+          Coupon Code : <strong>{{couponCode}}</strong>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>

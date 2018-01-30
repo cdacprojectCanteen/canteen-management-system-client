@@ -14,6 +14,7 @@ import { Customer } from '../../pojos/Customer';
 import { AccountService } from '../../services/account.service';
 import 'rxjs/add/operator/map';
 import { CustomerService } from '../../services/customer.service';
+declare var $: any;
 
 
 @Component({
@@ -30,7 +31,7 @@ export class NavbarComponent implements OnInit {
   private userFirstName: string;
   private isEmployee: boolean;
 
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService, private router: Router) {
     this.accountService.IsLoggedIn().subscribe(loggedIn => {
       this.loggedIn = loggedIn;
       console.log('updated loggedIn value in navbar');
@@ -70,51 +71,17 @@ export class NavbarComponent implements OnInit {
         console.log("Observed: " + valid);
         this.invalidLogin = !valid;
       });
-    // this.accountService
-    // .doCustomerLogin(this._loginForm.controls.username.value, this._loginForm.controls.password.value);
   }
 
   logout() {
     this.accountService.doLogout();
-    // this.loggedIn = this.accountService.IsLoggedIn();
   }
 
-  // @Output() onLoggedIn = new EventEmitter<boolean>();
-  // @Output() onLoggedInCustomer = new EventEmitter<Customer>();
-  // loggedIn = false;
-  // customer : Customer;
-
-  // logIn(customer: Customer) {
-  //   this.loggedIn = true;
-  //   this.onLoggedIn.emit(this.loggedIn);
-  //   this.customer = customer;
-  //   this.onLoggedInCustomer.emit(this.customer);
-  // }
-
-  // logout(){
-  //   this.loggedIn = false;
-  //   this.onLoggedIn.emit(this.loggedIn);
-  //   this.customer = null;
-  //   this.onLoggedInCustomer.emit(this.customer);
-  // }
-
-  // customerLogin(customer: Customer): void {
-  //   this.accountService.customerLogin(this._loginForm.controls.username.value, this._loginForm.controls.password.value)
-  //     .subscribe(customer => {
-  //       console.log(customer);
-  //       // console.log("ID: "+customer.Id);
-  //       console.log("ID: "+customer.id);
-  //       if(customer===null || customer === undefined || customer.id === -1){
-  //         console.log("Invalid User");
-  //         console.log(customer);
-
-  //       }
-  //       else{
-  //         console.log("Valid User");
-  //         this.logIn(customer);
-  //       }
-  //     },
-  //     error => this.errorMessage = <any>error);
-  // }
-
+  openCart(){
+    if(this.loggedIn && !this.isEmployee)
+      this.router.navigateByUrl('/cart');
+    else{
+      $('#needLoginModal').modal('show');
+    }
+  }
 }

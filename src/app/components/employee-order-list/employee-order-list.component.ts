@@ -20,26 +20,19 @@ export class EmployeeOrderListComponent implements OnInit {
 
   reloadOrders(params) {
     this.orderResource.query(params).then(orderslist => this.order = orderslist);
-
-  }
-tval = false;
-  myf(){
-    this.tval=true;
-    console.log('Hello');
-    // this.updateOrderService.setOrder(null);
   }
 
-  tval2 = false;
-  myf2(item){
-    this.tval2=true;
-    console.log('Hello');
-    // this.updateOrderService.setOrder(item);
+  orderReady(item){
+    item.orderStatus = 'READY';
+    this.orderService.updateOrder(item).subscribe(order=>{
+      this.deleteOrder(item);
+    });
   }
 
   deleteOrder(item) {
-    // this.order.splice(
-    //   this.order.indexOf(item), 1
-    // );
+    this.order.splice(
+      this.order.indexOf(item), 1
+    );
     // console.log(item.orderId);
     // this.orderService.deleteOrder(item.orderId).subscribe(order=>{
     //   this.order.splice(
@@ -68,7 +61,12 @@ tval = false;
       // this.orders = orders;
       // this.order = orders;
       console.log(orders);
-      this.orderResource = new DataTableResource(orders);
+      let newOrders = [];
+      for(let order of orders){
+        if(order.orderStatus == 'NEW')
+          newOrders.push(order);
+      }
+      this.orderResource = new DataTableResource(newOrders);
       // this.orderCount = orders.length;
       this.orderResource.count().then(count => this.orderCount = count);
       this.orderTable.reloadItems();
